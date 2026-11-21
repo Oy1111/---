@@ -123,3 +123,20 @@ Tjek dette på beskårne nærbilleder (ikke kun i kontaktarket), før der render
 - Spøgelser: tegn rigtige silhuetter opakt i et `soft()`-lag og sæt alpha på HELE laget (`softA`). Alpha pr. figur giver klodsede, overlappende rektangler.
 - Løbende figur: armene hænger NED og svinger (vinkel ±sw fra lodret), og knæet bøjer bagud. Tegn lygten FØR figuren.
 - render.mjs fandtes ikke i miljøet. Selvskrevet Playwright-render (4 workers, `toDataURL('image/jpeg',.92)` → ffmpeg) klarer 63 s / 1890 frames på ca. 1,5 min. Spleeter 2-stems via sherpa-onnx: `sherpa-onnx-spleeter-2stems-fp16` fra GitHub-releases (source-separation-models).
+
+**Reference 2+3: Ziras egne videoer (404musikdk) – brugt til "Zira – Tunge følelser" (v2)**
+- Det er kunstnerens etablerede stil: DUOTONE (én farvetone pr. sektion: violet nat, bordeaux, daggry), styret af en tone-rampe `T(v)` (0 = sort … 1 = hvid i paletten), og ALT tegnes med den. Paletten skifter blødt mellem sektioner.
+- Fast figur: Zira med hætte, strikket maske med øjenspalte og vatteret jakke (forfra og profil) + en kvindesilhuet med langt hår. Spøgelser = de samme silhuetter tegnet opakt i et eget lag og lagt på med lav alpha + lyskant.
+- Teksten er en del af scenen, ikke kun en undertekst. Variér stil pr. bid via `{stil}` i markup: drop (tungt ord falder og bumper), circle (tekst rundt om figuren), scatter (bogstaver opløses som spøgelser), frost (sløret bag dug, skarp hvor hånden tørrer), inphone/bubble (skrivemaskine i telefon/chat, bogstav for bogstav synkront med ordtiden), deltype (skrives og slettes igen), ecg, wave (rus), overflow (ordene vælter ud), strike (overstregning), digits (tæller), shatter, glint, big6 (tal fylder skærmen), slide (bogstaver glider ud), sign (lyskilt med pærer).
+- Grafiske motiver der virker: låseskærm med klokkeslæt + notifikationer, skrive-prikker, EKG der flader ud, frostramme (genereret iskrystal-tekstur), lyskegler, diskokugle, perspektivgitter, split-screen med to paletter.
+
+## 8. Præcis ord-sync (vigtigst – brugeren tjekker det)
+Energi-fordeling alene giver fejl på 0,5–1,9 s. Brug i stedet denne kæde:
+1. Whisper large-v3-turbo som ONNX fra sherpa-onnx GitHub-releases (`sherpa-onnx-whisper-turbo.tar.bz2`). Sæt `stream.set_option("max_tokens_per_second","25")`, ellers bliver korte klip afskåret. Kør på HELE mixet (bedre end den udskilte vokal).
+2. Prefix-dekodning pr. linje: afkod [linjestart, x] for x i trin på 0,12 s. Hvornår et ord dukker op = ordets slutning (+0,1–0,2 s forsinkelse). Læs tabellerne manuelt og match fonetisk.
+3. Sungne omkvæd: brug `librosa.pyin` (toner + stemt/ustemt). Ustemte huller = t/f/s/k → præcise stavelsesgrænser.
+4. Rap-vers: stemte segmenter (pyin voiced_flag) + vokalkerner (båndpas-energi-toppe) som støtte.
+5. Snap til nærmeste vokal-onset inden for ±0,07 s.
+6. VERIFICÉR: afkod [ordtid−0,03, ordtid+0,7] for hvert nøgleord. Ordet skal høres først i klippet. Hører modellen det foregående ord, er tiden for tidlig; hører den det næste, er den for sen. Scan usikre steder i trin på 0,1 s, og ret.
+- Tekst vises 0,04 s før ordet (LEAD), og bogstav-for-bogstav-stile fordeler bogstaverne over ordets varighed.
+- Sceneskift placeres lige før første ord i linjen (og på et beat, når det er muligt).
