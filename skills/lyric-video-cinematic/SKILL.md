@@ -140,3 +140,6 @@ Energi-fordeling alene giver fejl på 0,5–1,9 s. Brug i stedet denne kæde:
 6. VERIFICÉR: afkod [ordtid−0,03, ordtid+0,7] for hvert nøgleord. Ordet skal høres først i klippet. Hører modellen det foregående ord, er tiden for tidlig; hører den det næste, er den for sen. Scan usikre steder i trin på 0,1 s, og ret.
 - Tekst vises 0,04 s før ordet (LEAD), og bogstav-for-bogstav-stile fordeler bogstaverne over ordets varighed.
 - Sceneskift placeres lige før første ord i linjen (og på et beat, når det er muligt).
+- **Gentagne omkvæd (Remotion-projekt "Node – Pull Up"):** Find forskydningen mellem omkvæd ved at krydskorrelere vokal-RMS (hop 5 ms) for et præcist sat omkvæd mod resten af sangen. Korrelation > 0,8 betyder samme optagelse: genbrug ordtiderne + forskydning (her +9,60 s og +38,40 s). Det er præcist og sparer mange dekodninger.
+- **Prefix pr. SEKTION** (8–10 s fra et fast start) giver Whisper kontekst og er langt mere robust end prefix pr. linje, som kræver, at linjestarterne allerede er rigtige.
+- Remotion-variant: React/SVG-scener, data i `src/data/timing.ts` genereret af `gen.py` (ordtider snappet til onsets, chunks, beats, hits, scener). Chromium fra `/opt/pw-browsers/chromium_headless_shell-*/…/chrome-headless-shell` via `Config.setBrowserExecutable`. Render 50 s / 1500 frames ≈ 5,5 min med concurrency 4.
