@@ -197,38 +197,82 @@ export const SchoolExterior: React.FC<{ t: number; hour?: number }> = ({ t, hour
   </g>
 );
 
-/** Inspektørens kontor: skrivebord, mapper, flag, reol */
+/** Inspektørens kontor: persienner med eftermiddagslys, arkivskabe, diplomer, plante, lampe, skærm */
 export const Office: React.FC<{ t: number }> = ({ t }) => (
   <g>
-    <rect x={-300} y={-300} width={W + 600} height={H + 600} fill="#d8cfbf" />
-    <rect x={-300} y={-300} width={W + 600} height={H + 600} fill="url(#sunGlow)" opacity={0.25} />
+    <rect x={-300} y={-300} width={W + 600} height={H + 600} fill="#cfc4b0" />
+    {Array.from({ length: 24 }).map((_, i) => (
+      <rect key={i} x={i * 60 - 300} y={-300} width={30} height={1900} fill="#c6baa4" opacity={0.6} />
+    ))}
+    {/* vindue med persienner */}
+    <rect x={560} y={140} width={460} height={600} fill="#f4dca8" />
+    {Array.from({ length: 22 }).map((_, i) => (
+      <rect key={i} x={560} y={150 + i * 27} width={460} height={14} fill="#e9e4d8" />
+    ))}
+    <rect x={560} y={140} width={460} height={600} fill="none" stroke="#fbf6ea" strokeWidth={16} />
+    {/* lysstriber fra persiennerne ned over rummet */}
+    <g style={{ mixBlendMode: "screen" }}>
+      {Array.from({ length: 10 }).map((_, i) => (
+        <polygon key={i} points={`${560},${160 + i * 54} ${1020},${160 + i * 54} ${700 + Math.sin(t * 0.3) * 10},${1100 + i * 60} ${200},${1100 + i * 60}`} fill="#fff1c8" opacity={0.05} />
+      ))}
+    </g>
+    {/* diplomer */}
+    {[0, 1].map((i) => (
+      <g key={i} transform={`translate(${80 + i * 200},${180})`}>
+        <rect width={160} height={120} fill="#6e4e30" />
+        <rect x={10} y={10} width={140} height={100} fill="#f4efe2" />
+        <circle cx={80} cy={78} r={14} fill="#c0392b" />
+        <rect x={30} y={30} width={100} height={8} fill="#999" />
+      </g>
+    ))}
     {/* reol */}
-    <rect x={40} y={200} width={420} height={760} fill="#6e4e30" />
-    {[0, 1, 2, 3].map((r) => (
+    <rect x={40} y={360} width={420} height={600} fill="#6e4e30" />
+    {[0, 1, 2].map((r) => (
       <g key={r}>
-        <rect x={60} y={230 + r * 180} width={380} height={150} fill="#4a321e" />
+        <rect x={60} y={380 + r * 190} width={380} height={160} fill="#4a321e" />
         {Array.from({ length: 9 }).map((_, i) => (
-          <rect key={i} x={70 + i * 40} y={250 + r * 180 + random(`b${r}${i}`) * 30} width={32} height={130 - random(`b${r}${i}`) * 30} fill={["#8e2b2b", "#2b4e8e", "#2b8e5a", "#c9a046", "#5a2b8e"][(i + r) % 5]} />
+          <rect key={i} x={70 + i * 40} y={400 + r * 190 + random(`b${r}${i}`) * 30} width={32} height={140 - random(`b${r}${i}`) * 30} fill={["#8e2b2b", "#2b4e8e", "#2b8e5a", "#c9a046", "#5a2b8e"][(i + r) % 5]} />
         ))}
       </g>
     ))}
-    {/* dansk flag på bordet */}
-    <rect x={780} y={980} width={6} height={260} fill="#bbb" />
-    <rect x={786} y={990} width={150} height={100} fill="#c8102e" />
-    <rect x={826} y={990} width={22} height={100} fill="#fff" />
-    <rect x={786} y={1030} width={150} height={20} fill="#fff" />
+    {/* arkivskab + plante */}
+    <rect x={40} y={980} width={200} height={460} fill="#8a8f98" />
+    {[0, 1, 2].map((i) => (
+      <g key={i}>
+        <rect x={52} y={995 + i * 148} width={176} height={134} fill="#9aa0aa" stroke="#6a6f78" strokeWidth={3} />
+        <rect x={115} y={1050 + i * 148} width={50} height={10} rx={4} fill="#5a5f68" />
+      </g>
+    ))}
+    <path d="M880,1500 L960,1500 L950,1420 L890,1420 Z" fill="#c0603a" />
+    {[-1, 0, 1, 2].map((k) => (
+      <ellipse key={k} cx={920 + k * 18} cy={1340} rx={18} ry={70} fill="#3f7a3a" transform={`rotate(${k * 18 + Math.sin(t + k) * 2},920,1420)`} />
+    ))}
+    {/* dansk bordflag */}
+    <rect x={780} y={1180} width={6} height={160} fill="#bbb" />
+    <rect x={786} y={1190} width={110} height={74} fill="#c8102e" />
+    <rect x={816} y={1190} width={16} height={74} fill="#fff" />
+    <rect x={786} y={1220} width={110} height={14} fill="#fff" />
     {/* skrivebord */}
     <rect x={-300} y={1500} width={W + 600} height={600} fill="url(#wood)" />
     <rect x={-300} y={1500} width={W + 600} height={16} fill="#d9a56a" />
-    {/* mappe med stempel */}
-    <g transform="translate(300,1560) rotate(-6)">
-      <rect x={0} y={0} width={420} height={300} rx={8} fill="#e8c77a" />
-      <rect x={0} y={0} width={140} height={34} rx={6} fill="#e8c77a" transform="translate(0,-26)" />
-      <text x={30} y={70} fontFamily="SpaceMonoB" fontSize={30} fill="#5a4320">
-        ELEVMAPPE · ABDI
-      </text>
+    {/* skærm + lampe + krus + telefon */}
+    <g transform="translate(860,1500)">
+      <rect x={-20} y={-10} width={40} height={10} fill="#333" />
+      <rect x={-5} y={-80} width={10} height={70} fill="#333" />
     </g>
-    <circle cx={900} cy={1600} r={4 + Math.sin(t) * 0.5} fill="#000" opacity={0} />
+    <g transform="translate(150,1500)">
+      <path d="M0,0 L60,0 L40,-20 L20,-20 Z" fill="#1d4a2a" />
+      <path d="M30,-20 L60,-150 L120,-150" stroke="#1d4a2a" strokeWidth={8} fill="none" />
+      <path d="M90,-160 L170,-160 L150,-120 L110,-120 Z" fill="#1d4a2a" />
+      <circle cx={130} cy={-110} r={180} fill="url(#sunGlow)" opacity={0.5} />
+    </g>
+    <g transform="translate(980,1560)">
+      <rect x={-30} y={-60} width={60} height={70} rx={8} fill="#fff" />
+      <path d="M30,-45 Q55,-35 30,-15" stroke="#fff" strokeWidth={8} fill="none" />
+      {[0, 1].map((q) => (
+        <path key={q} d={`M${-10 + q * 18},-70 q8,-${16 + ((t * 20) % 10)} 0,-36`} stroke="#fff" strokeWidth={4} fill="none" opacity={0.35} />
+      ))}
+    </g>
   </g>
 );
 

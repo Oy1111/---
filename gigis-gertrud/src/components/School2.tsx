@@ -49,6 +49,14 @@ export const School2Defs: React.FC = () => (
       <stop offset="0" stopColor="#8d8a86" />
       <stop offset="1" stopColor="#5c5a58" />
     </linearGradient>
+    <linearGradient id="concrete" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stopColor="#a7a29b" />
+      <stop offset="1" stopColor="#8a857e" />
+    </linearGradient>
+    <linearGradient id="duskShade" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stopColor="#2a2550" stopOpacity="0.55" />
+      <stop offset="1" stopColor="#0d0f1c" stopOpacity="0.65" />
+    </linearGradient>
     <filter id="soft4" x="-50%" y="-50%" width="200%" height="200%">
       <feGaussianBlur stdDeviation="4" />
     </filter>

@@ -2,7 +2,8 @@ import React from "react";
 import { AbsoluteFill, random } from "remotion";
 import { Stage, useTimes } from "../components/Stage";
 import { Bust, Kid, PeopleDefs, Who } from "../components/People";
-import { Office, SchoolDefs, Street, Clock } from "../components/School";
+import { Office, SchoolDefs, Clock } from "../components/School";
+import { Estate, Person } from "../components/Block";
 import { School2Defs, SchoolExterior2 as SchoolExterior, Classroom2 as Classroom } from "../components/School2";
 import { wordTimes, lineOf } from "../data/timing";
 import { W, H, beatPulse, clamp, easeOut, smooth } from "../lib";
@@ -318,20 +319,31 @@ export const Karakter: React.FC<P> = ({ start, line }) => {
   );
 };
 
-// ------------------------------------------------------------------ gaden
-export const Gaden: React.FC<P> = ({ start, dur }) => {
+// ------------------------------------------------------------------ gaden: boligblokken om aftenen
+export const Gaden: React.FC<P> = ({ start, dur, line }) => {
   const { lt, t } = useTimes(start);
+  const gd = wordTimes(line, "gaden")[0] ?? start + 1.8;
+  const zoom = smooth((t - gd + 0.2) / 0.6);
   const u = lt / dur;
   return (
-    <S cam={[1.0 + u * 0.08, 0, 0]}>
-      <Street t={t} />
-      {[640, 720, 800].map((x, i) => (
-        <g key={i} opacity={0.95}>
-          <Kid x={x + i * 10} y={1720} h={420} t={t} color="#1a1a22" />
-        </g>
-      ))}
-      <Kid x={200 + u * 260} y={1800} h={360} t={t} run={0.6} color="#2c4a7a" />
-      <rect x={-300} y={-300} width={W + 600} height={H + 600} fill="#1c2550" opacity={0.15} />
+    <S cam={[1.0 + u * 0.04 + zoom * 0.3, zoom * 20, -zoom * 300]}>
+      <Estate t={t} cam={u * 80} />
+      {/* de yngre langt tilbage ved bænken */}
+      <Person x={400} y={1480} h={250} t={t} seed={4} pose="hang" top="#7a1f2a" head="cap" headCol="#f2f2f2" face={1} skin="#c88d63" />
+      <Person x={470} y={1488} h={240} t={t} seed={5} pose="pockets" top="#2e4a7a" head="curls" face={0} skin="#a46c45" />
+      <Person x={540} y={1478} h={255} t={t} seed={6} pose="phone" top="#3a3a3a" head="hood" headCol="#222" face={-1} skin="#8a5a38" />
+      {/* de ældre ved bilen (mellemgrund) */}
+      <Person x={790} y={1620} h={400} t={t} seed={1} pose="smoke" puffer top="#15171d" head="cap" headCol="#0d0d10" face={-1} skin="#8a5a38" />
+      <Person x={900} y={1640} h={420} t={t} seed={2} pose="cross" puffer top="#2a2f22" head="beanie" headCol="#111" face={0} skin="#b07a52" />
+      <Person x={1010} y={1610} h={390} t={t} seed={3} pose="phone" top="#1d2230" head="hood" face={-1} skin="#6e4a30" />
+      {/* udkig */}
+      <Person x={160} y={1700} h={460} t={t} seed={9} pose="pockets" puffer top="#1a1c22" head="beanie" headCol="#3a3a3a" face={Math.sin(t * 1.2) > 0 ? 1 : -1} skin="#9a6440" />
+      {/* handlen i forgrunden */}
+      <Person x={430} y={1930} h={660} t={t} seed={7} pose="deal" item="cash" puffer top="#101216" head="beanie" headCol="#26262c" face={1} skin="#7a4e32" />
+      <Person x={650} y={1945} h={680} t={t} seed={8} pose="deal" item="bag" top="#2b2b33" head="cap" headCol="#1a1a1a" face={-1} skin="#b07a52" flip />
+      {t > gd && <circle cx={540} cy={1560} r={90 * Math.exp(-(t - gd) * 2)} fill="url(#glowWhite)" />}
+      {/* Abdi kommer gående i forgrunden */}
+      <Person x={1000 - u * 160} y={2000} h={600} t={t} seed={10} pose="walk" top="#2c4a7a" head="curls" face={-1} skin="#c88d63" flip />
     </S>
   );
 };
@@ -487,8 +499,45 @@ export const Bedroom: React.FC<P & { mode: "rap" | "kloge" | "deto" }> = ({ star
   );
   return (
     <S cam={[1.0 + lt * 0.03, 0, 0]}>
-      <rect x={-300} y={-300} width={W + 600} height={H + 600} fill="#3a3550" />
-      <circle cx={540} cy={500} r={700} fill="url(#sunGlow)" opacity={0.25} />
+      <rect x={-300} y={-300} width={W + 600} height={H + 600} fill="#2e2a44" />
+      {/* LED-strip langs loftet */}
+      <rect x={-300} y={-300} width={W + 600} height={330} fill="#1e1a30" />
+      <rect x={-300} y={24} width={W + 600} height={8} fill="#c86bff" />
+      <rect x={-300} y={20} width={W + 600} height={200} fill="#c86bff" opacity={0.12} />
+      {/* vindue ud mod blokken om aftenen */}
+      <g transform="translate(560,1060)">
+        <rect x={0} y={0} width={420} height={300} fill="#1b2240" />
+        {Array.from({ length: 24 }).map((_, i) => (
+          <rect key={i} x={20 + (i % 8) * 50} y={30 + Math.floor(i / 8) * 80} width={26} height={34} fill="#ffcf86" opacity={random(`bw${i}`) < 0.5 ? 0.9 : 0.1} />
+        ))}
+        <rect x={0} y={0} width={420} height={300} fill="none" stroke="#e8e0d0" strokeWidth={14} />
+        <line x1={210} y1={0} x2={210} y2={300} stroke="#e8e0d0" strokeWidth={10} />
+      </g>
+      {/* seng med dyne og puder */}
+      <g transform="translate(-60,1420)">
+        <rect x={0} y={0} width={620} height={220} rx={12} fill="#4a3a2a" />
+        <path d="M0,10 Q300,-40 620,10 L620,180 L0,180 Z" fill="#5a6aa0" />
+        <path d="M60,10 Q300,-30 600,20" stroke="#7a8ac0" strokeWidth={8} fill="none" />
+        <ellipse cx={120} cy={-10} rx={110} ry={40} fill="#e8e8f0" />
+      </g>
+      {/* skrivebord med laptop + højttaler */}
+      <g transform="translate(600,1420)">
+        <rect x={0} y={0} width={420} height={20} fill="#6e4e30" />
+        <rect x={20} y={20} width={14} height={260} fill="#3a2a1e" />
+        <rect x={380} y={20} width={14} height={260} fill="#3a2a1e" />
+        <path d="M120,0 L300,0 L290,-14 L130,-14 Z" fill="#9a9aa8" />
+        <path d="M140,-14 L280,-14 L270,-130 L150,-130 Z" fill="#1a1a24" />
+        <rect x={156} y={-122} width={108} height={98} fill="#5a8aff" opacity={0.6} />
+        <rect x={330} y={-110} width={60} height={110} rx={8} fill="#111" />
+        <circle cx={360} cy={-40} r={20} fill="#2a2a30" />
+        <circle cx={360} cy={-85} r={10} fill="#2a2a30" />
+      </g>
+      {/* skokasser */}
+      {[0, 1, 2].map((i) => (
+        <rect key={i} x={40} y={1660 - i * 60} width={160} height={58} fill={["#e67e22", "#c0392b", "#ecf0f1"][i]} stroke="#222" strokeWidth={3} />
+      ))}
+      <rect x={-300} y={1640} width={W + 600} height={700} fill="#3a2e28" />
+      <circle cx={540} cy={500} r={700} fill="url(#sunGlow)" opacity={0.15} />
       {mode !== "deto" ? (
         <>
           {poster(290, "bandana")}
