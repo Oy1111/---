@@ -4,6 +4,7 @@ import { Building, BuildingSpec, GROUND, topOf } from "./Building";
 import { StreetLamp, Bike, Car, Bin } from "./Props";
 import { Person, LOOKS, joints } from "./Person";
 import { CarInterior } from "./CarInterior";
+import { CarCLS } from "./CarCLS";
 import { ClubPOV } from "./Club";
 import { beatPulse, clamp, easeOut, lerp, smooth } from "../lib";
 import { wordTimes } from "../data/timing";
@@ -587,29 +588,29 @@ const RoofSitter: React.FC<{ t: number }> = ({ t }) => {
 };
 
 /* ---------- G: parkeret bil med speedometer ---------- */
-export const CARWIN = { x: 6647.3, y: 2627, w: 39.375, h: 70 };
+const CAR = { x: 6600, y: 2860 };
+const WINC: [number, number] = [55, -149]; // fordør-rudens midte (lokal)
+export const WIN_ZOOM = 40;
 const ParkedCar: React.FC<{ t: number }> = ({ t }) => {
   const om = f0(10, "om") ?? 31.3;
   const hu = f0(10, "hundrede") ?? 33.5;
   const pr = f0(10, "procent") ?? 34.25;
   const p = t < om ? 0 : t < hu ? clamp((t - om) / (hu - om)) * 0.82 : lerp(0.82, 1, ap(t, hu, pr - hu));
   const full = ap(t, pr, 0.2);
-  const showIn = t > 30.5 && t < 36;
+  const roll = smooth((t - 31.7) / 0.8) * (1 - smooth((t - 35.6) / 0.8));
+  const showIn = t > 30.5 && t < 36.5;
+  const sc = 1 / WIN_ZOOM;
   return (
-    <g>
-      <Car x={6600} y={2860} s={1.05} dir={-1} lights={0} />
+    <CarCLS x={CAR.x} y={CAR.y} roll={roll} t={t}>
       {showIn && (
-        <g>
-          <clipPath id="carWinClip"><rect x={CARWIN.x} y={CARWIN.y} width={CARWIN.w} height={CARWIN.h} /></clipPath>
-          <g clipPath="url(#carWinClip)">
-            <g transform={`translate(${CARWIN.x},${CARWIN.y}) scale(${CARWIN.h / 1920})`}>
-              <CarInterior t={t} p={p} full={full} />
-            </g>
+        <g clipPath="url(#clsWinF)">
+          <g transform={`translate(${WINC[0] - 540 * sc},${WINC[1] - 960 * sc}) scale(${sc})`}>
+            <CarInterior t={t} p={p} full={full} />
           </g>
+          <path d="M138,-121 C120,-140 92,-166 66,-176 C44,-182 14,-182 -6,-180 L-14,-121Z" fill="#000" opacity={0.25 * (1 - roll)} />
         </g>
       )}
-      <rect x={CARWIN.x - 60} y={CARWIN.y - 6} width={160} height={84} fill="url(#rBlue)" opacity={0.35} style={{ mixBlendMode: "screen" }} />
-    </g>
+    </CarCLS>
   );
 };
 
