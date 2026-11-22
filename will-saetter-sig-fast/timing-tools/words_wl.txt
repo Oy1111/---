@@ -1,0 +1,13 @@
+{gold}Hvad 15.0|gemmer 15.2|du 15.55|bagved 15.75|de 15.95|/|*himmelvendte 16.3|*øjne? 17.3
+{normal}Jeg 18.7|vil 18.9|aldrig 19.05|forstå 19.45|det, 19.75|/|hvis 19.9|du 20.0|ikk' 20.15|sir' 20.4|det 20.85|*højt 21.35
+{heart}Som 22.6|om 22.8|du 23.05|aldrig 23.2|bærer 23.6|din 23.8|/|*følelser 24.05|ude 24.45|på 24.7|*tøjet 25.1
+{reach}Vi 27.05|vil 27.15|aldrig 27.3|ku' 27.5|*nå 27.8|det, 28.0|/|hvis 28.1|du 28.2|ikk' 28.3|*viser 28.5|mig 29.25
+{chat}Sig 30.75|noget, 31.4|det 31.75|ligemeget 31.85|/|hvis 33.3|du 33.45|ikk' 33.6|siger 33.75|det 34.0|*ligeud 34.3
+{chat}Så 36.45|må 36.7|vi 36.85|se 37.0|om 37.3|jeg 37.7|kan 38.0|sige: 38.45|/|*"I 38.9|*lige 39.15|*måde" 39.5
+{candle}Selvom 40.8|jeg 41.3|ved 41.45|hvordan 41.7|det 42.0|*ender 42.25|*ud 42.85
+{echo}Er 43.7|det 43.9|som 44.4|om 44.7|de 45.0|*samme 45.4|*spørgsmål 45.7
+{stuck}*Sætter 46.45|*sig 47.05|*fast 47.7
+{gold}Bar 49.7|vi 49.9|ku' 50.1|*ændre 50.6|*svarene 51.3
+{shatter}*Skille 54.3|*det 54.8|*ad 55.2|og 55.45
+{rewind}*Starte 59.4|*forfra 60.4
+{normal}Du 62.85|så 63.1|svær 63.3|at 63.5|gå 63.7|/|helt 64.0|ind 64.15|under 64.35|*huden 64.7|på 65.0
