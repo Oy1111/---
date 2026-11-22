@@ -160,3 +160,4 @@ Energi-fordeling alene giver fejl på 0,5–1,9 s. Brug i stedet denne kæde:
 
 **Ny stil: neon-avatar (skill `neon-avatar-lyric-stil`, brugt til "Branco – Ingen Introduktion – 4x4", 55 s, sang 0:21,9–1:16,9):** kunstneren fast i midten (tegnet ud fra foto, to-farvet neon-lyskant), neon-gade/tage bag ham, ét bogstaveligt sæt-stykke pr. linje, pink neon-nøgleord + Playfair-italic småord, outro med navnet i pink neon. Våben-ord omskrives altid: "9'ere" → trøjenumre, "skud" → kamerablitz.
 - Når brugeren sender en ny reference, laves den ALTID til en ny stil-skill (`<navn>-lyric-stil`) + en kort note her.
+- **Reference = inspiration, ikke skabelon (brugerens rettelse på Branco):** tag referencens niveau, kamera-grammatik og realisme, men lav eget univers, egen original karakter (ikke kunstnerens foto klistret ind) og egne farver. Brugeren vil se noget "vildt godt": helst ægte 3D (se `neon-avatar-lyric-stil` → "Ægte 3D i Remotion").

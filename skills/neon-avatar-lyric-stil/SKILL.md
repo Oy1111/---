@@ -33,3 +33,16 @@ Bruges sammen med `lyric-video-cinematic` (ord-sync, regler om våben/stoffer/br
 - "fuck hva' de si'r" → talebobler ("bla bla", "hva så?") der splintres på "fuck".
 - "hjørnet" → grønt vejskilt + tom gynge; "mama … sin søn" → svævende telefon "MOR ♥ · 12 ubesvarede opkald"; "dag/nat" → sol op, så måne; "skejs" → sedler regner; "vejen derhjemme" → GPS-kort "rute ikke fundet"; "14 år … husleje" → neon-14 + konvolut "HUSLEJE til mama" der åbner med sedler; "hjerte" → stort neon-hjerte; "ikk' noget liv … kærlighed" → lysene dæmpes, højhusets vinduer slukker ét for ét, hjertet flimrer og knækker; "penge blevet værd" → sedler brænder til aske; "brødre blaffer hinanden" → to figurer med ryggen til hinanden.
 - Ord-sync: hook 2 er samme optagelse som hook 1 → genbrug tiderne + forskydning (her +13,72 s). Ret derefter begge med verifikationen.
+
+## VIGTIG RETTELSE fra brugeren (efter første Branco-version)
+- **Kopiér ikke referencens farver/neon 1:1.** Brugeren ville have referencens *realistiske 3D-look* (blødt lys, materialer, dybde, en avatar-figur), ikke en neon-kopi.
+- **Lav din HELT EGEN karakter**, ikke kunstnerens foto indsat. Kunstnerens foto må kun give små hints (fx rosa briller, guldkæde, dynevest).
+- **Mere avanceret, flere detaljer, ikke kedeligt.** Bevis kvalitet: ægte 3D frem for flade lag.
+
+## Ægte 3D i Remotion (projekt `branco-3d`)
+- `npm i @remotion/three three @react-three/fiber@9 @react-three/drei@10`; `Config.setChromiumOpenGlRenderer("angle")` og `chromiumOptions: { gl: "angle" }` i renderStill/selectComposition; render med `--gl=angle`. ~2–5 s/frame.
+- `@react-three/postprocessing` (EffectComposer: Bloom/DOF) giver hvide/sorte billeder i headless-render → lad være; brug ffmpeg-postfx til bloom/halation/korn og `fog` til dybde.
+- Karakter af procedurale meshes: torso som `LatheGeometry` med en sinus-bump pr. dyne-kammer (+ tynde torus-syninger), ærmer som lathe-segmenter placeret med quaternion mellem skulder→albue→hånd, hætte = delvis kugle + torus-kant, balaclava = mørke kugler, briller = tynde cylindre (transparent pink MeshPhysical) + guld-torus, kæde = 48 små tori langs en CatmullRom-kurve (hver anden roteret 90°). Materialer: MeshPhysical med clearcoat/sheen til satin-nylon, metalness 1 / roughness .2 til guld.
+- Kamera ~3,3 m foran, kig på y≈1,6, fov 40: i 9:16 er kun ca. ±1 m synligt i siderne ved z≈−2 → placér sæt-stykker indenfor (x ≤ ±0,95), ellers ryger de ud af billedet. Ting lige bag figuren skjules af ham – flyt dem ud til siden eller op over skuldrene.
+- Lys: hemisphere + svag ambient, varm nøgle-spot foran-venstre, to farvede kant-spots bagfra, telefonens pointLight lyser ansigtet nedefra; få rigtige pointLights i gaden (resten emissive). Facader = CanvasTexture (map + emissiveMap for tændte vinduer), en materiale pr. bygning så vinduer kan slukke én for én.
+- Hook 2 kan genbruge hook 1's koreografi (samme ordtider + offset) men med andet vejr (regn som InstancedMesh, rødt/blåt kantlys).
