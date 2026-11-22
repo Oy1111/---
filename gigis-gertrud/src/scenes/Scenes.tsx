@@ -2,7 +2,8 @@ import React from "react";
 import { AbsoluteFill, random } from "remotion";
 import { Stage, useTimes } from "../components/Stage";
 import { Bust, Kid, PeopleDefs, Who } from "../components/People";
-import { Classroom, Office, SchoolDefs, SchoolExterior, Street, Clock } from "../components/School";
+import { Office, SchoolDefs, Street, Clock } from "../components/School";
+import { School2Defs, SchoolExterior2 as SchoolExterior, Classroom2 as Classroom } from "../components/School2";
 import { wordTimes, lineOf } from "../data/timing";
 import { W, H, beatPulse, clamp, easeOut, smooth } from "../lib";
 
@@ -12,6 +13,7 @@ type P = { start: number; dur: number; line: number };
 const S: React.FC<{ children: React.ReactNode; cam?: [number, number, number]; bg?: string }> = ({ children, cam, bg }) => (
   <Stage cam={cam} bg={bg}>
     <SchoolDefs />
+    <School2Defs />
     <PeopleDefs />
     {children}
   </Stage>

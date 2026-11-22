@@ -1,20 +1,20 @@
-*Gertrud 8.15|var 8.45|den 8.7|/|*eneste 8.95|der 9.45|*forstod 9.8|/|(ååh) 10.9
-De 11.95|andre 12.15|*lærer' 12.75|/|de 13.1|sagde 13.4|jeg 13.6|var 13.72|en 13.85|*rod 14.15|/|(gertrud) 15.1
-Hvis 16.1|*Gertrud 16.5|ikk' 16.7|var 17.0|/|*slidt 17.35|og 17.75|*gammel 18.0|nu 18.35
-Vil' 18.95|jeg 19.15|gøre 19.4|*hende 19.75|/|til 20.0|min 20.3|*brud 20.65
-{big}Ger 21.25|Ger 21.65|*Gertrud 22.3
-{big}Ger 23.45|Ger 23.85|*Gertrud 24.55
-*Inspektøren 25.1|sagde 26.05|/|"Abdi 26.45|har 26.75|*ADHD" 26.95
-Men 28.75|*Gertrud 29.05|sagde 29.4|/|"Nej 29.65|du 29.85|ta'r 30.05|*fejl 30.5|/|han 30.7|har 30.85|bare 31.0|meget 31.3|*energi" 31.8
-Og 33.15|jeg 33.3|fik 33.45|altid 33.6|*02 33.95|/|men 34.75|*Gertrud 34.95|/|hun 35.55|ga' 35.75|mig 35.95|*10 36.15
-Hun 36.45|sagde 36.6|*"Abdi 37.0|/|du 37.3|må 37.45|ikk' 37.6|end' 37.95|på 38.15|*gaden 38.3
-Der' 38.85|så 39.0|*meget 39.15|mer' 39.35|/|du 39.5|ka' 39.7|*bli'" 39.95
-Men 40.4|jeg 40.55|sagde 40.7|*"Gertrud 41.05|/|jeg 41.45|vil 41.55|være 41.7|*rig 42.15
-Jeg 42.3|vil 42.45|ikk' 42.7|gå 42.95|i 43.1|*skole 43.3|/|jeg 43.6|vil 43.7|være 43.8|*fri 44.2
-Jeg 44.7|vil 44.8|lave 44.95|*para 45.4|/|jeg 45.5|vil 45.6|være 45.75|*G 46.3
-Og 46.55|rap 46.65|ligesom 46.85|/|*2Pac 47.7|og 47.9|*Biggie" 48.05
-Men 48.7|*Gertrud 48.95|sagde 49.1|/|"Abdi 49.3|der' 49.55|noget 49.75|/|du 50.0|må 50.1|*forstå 50.4
-*2Pac 50.95|og 51.3|*Biggie 51.5|/|de 51.75|var 51.88|rigtig 52.0|*kloge 52.5
+{chalk}*Gertrud 8.15|var 8.45|den 8.7|/|*eneste 8.95|der 9.45|*forstod 9.8|/|(ååh) 10.9
+{messy}De 11.95|andre 12.15|*lærer' 12.75|/|de 13.1|sagde 13.4|jeg 13.6|var 13.72|en 13.85|*rod 14.15|/|(gertrud) 15.1
+{sepia}Hvis 16.1|*Gertrud 16.5|ikk' 16.7|var 17.0|/|*slidt 17.35|og 17.75|*gammel 18.0|nu 18.35
+{love}Vil' 18.95|jeg 19.15|gøre 19.4|*hende 19.75|/|til 20.0|min 20.3|*brud 20.65
+{stutter}Ger 21.25|Ger 21.65|*Gertrud 22.3
+{stutter}Ger 23.45|Ger 23.85|*Gertrud 24.55
+{report}*Inspektøren 25.1|sagde 26.05|/|"Abdi 26.45|har 26.75|*ADHD" 26.95
+{energy}Men 28.75|*Gertrud 29.05|sagde 29.4|/|"Nej 29.65|du 29.85|ta'r 30.05|*fejl 30.5|/|han 30.7|har 30.85|bare 31.0|meget 31.3|*energi" 31.8
+{grade}Og 33.15|jeg 33.3|fik 33.45|altid 33.6|*02 33.95|/|men 34.75|*Gertrud 34.95|/|hun 35.55|ga' 35.75|mig 35.95|*10 36.15
+{graffiti}Hun 36.45|sagde 36.6|*"Abdi 37.0|/|du 37.3|må 37.45|ikk' 37.6|end' 37.95|på 38.15|*gaden 38.3
+{dream}Der' 38.85|så 39.0|*meget 39.15|mer' 39.35|/|du 39.5|ka' 39.7|*bli'" 39.95
+{gold}Men 40.4|jeg 40.55|sagde 40.7|*"Gertrud 41.05|/|jeg 41.45|vil 41.55|være 41.7|*rig 42.15
+{free}Jeg 42.3|vil 42.45|ikk' 42.7|gå 42.95|i 43.1|*skole 43.3|/|jeg 43.6|vil 43.7|være 43.8|*fri 44.2
+{gold}Jeg 44.7|vil 44.8|lave 44.95|*para 45.4|/|jeg 45.5|vil 45.6|være 45.75|*G 46.3
+{graffiti}Og 46.55|rap 46.65|ligesom 46.85|/|*2Pac 47.7|og 47.9|*Biggie" 48.05
+{chalk}Men 48.7|*Gertrud 48.95|sagde 49.1|/|"Abdi 49.3|der' 49.55|noget 49.75|/|du 50.0|må 50.1|*forstå 50.4
+{bulb}*2Pac 50.95|og 51.3|*Biggie 51.5|/|de 51.75|var 51.88|rigtig 52.0|*kloge 52.5
 Så 52.85|hvis 53.05|du 53.3|vil 53.5|være 53.75|/|ligesom 54.15|de 54.45|*to 54.7
-Må 54.85|du 55.0|først 55.15|lære 55.45|/|at 55.65|*læse 56.0|i 56.25|en 56.4|*bog" 56.7
-*Gertrud 56.95|var 57.25|*på 57.55
+{book}Må 54.85|du 55.0|først 55.15|lære 55.45|/|at 55.65|*læse 56.0|i 56.25|en 56.4|*bog" 56.7
+{chalk}*Gertrud 56.95|var 57.25|*på 57.55
