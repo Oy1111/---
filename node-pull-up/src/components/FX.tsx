@@ -4,7 +4,7 @@ import { FLASHES, DIPS } from "../data/timing";
 import { FPS, H, W } from "../lib";
 
 /** Tegneserie-render: korn/scanlines slås fra (efterbehandlingen tilføjer papir + raster) */
-const COMIC = true;
+const COMIC = false;
 
 /** Efterbehandling: flash på hits, sorte dips ved klip, vignette, korn, scanlines. */
 export const FX: React.FC = () => {

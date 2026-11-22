@@ -7,8 +7,8 @@ import { staticFile } from "remotion";
  * Billederne er rigtige fotos – derfor ser ansigter og kroppe ægte ud.
  */
 export const ARTISTS = {
-  node: { src: "people/node.png", w: 784, h: 1020, crop: [141, 200, 643, 1013] as const },
-  gilli: { src: "people/gilli.png", w: 1200, h: 1200, crop: [28, 53, 1200, 1200] as const },
+  node: { src: "people/node_vector.png", w: 784, h: 1020, crop: [141, 200, 643, 1013] as const },
+  gilli: { src: "people/gilli_vector.png", w: 1200, h: 1200, crop: [28, 53, 1200, 1200] as const },
 };
 
 export const ArtistDefs: React.FC = () => (
