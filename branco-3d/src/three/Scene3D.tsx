@@ -222,7 +222,7 @@ export const Scene3D: React.FC<{ t: number }> = ({ t }) => {
       {sect === 1 && <Rain t={t} amount={1} />}
 
       {/* ---- HOOK ---- */}
-      {suvOn > 0 && <SUV z={lerp(-30, -4.2, suvIn)} open={ap(t, fire[0], 0.5)} lights={suvOn} />}
+      <SUV z={suvOn > 0 ? lerp(-30, -4.2, suvIn) : -200} open={ap(t, fire[0], 0.5)} lights={suvOn} />
       {crowd > 0 &&
         Array.from({ length: 9 }).map((_, i) => (
           <mesh key={i} position={[-3 + i * 0.75, 0.9, -3.4 - (i % 3) * 0.5]}>
@@ -247,14 +247,19 @@ export const Scene3D: React.FC<{ t: number }> = ({ t }) => {
           return (
             <group key={i}>
               <Glow pos={p} s={1.6} tex={tx.flash} op={1 - k / 0.3} />
-              <pointLight position={p} intensity={6 * (1 - k / 0.3)} distance={4} color="#ffffff" />
             </group>
           );
         })}
+      {(() => {
+        let fi = 0, fk = 0;
+        for (let i = 0; i < 15; i++) { const k = t - (skud - 0.05 + i * 0.065); if (k >= 0 && k < 0.3) { fi = i; fk = 1 - k / 0.3; } }
+        return <pointLight position={[(random(`fx${fi}`) - 0.5) * 1.9, 1.1 + random(`fy${fi}`) * 1.5, -1.0 - random(`fz${fi}`) * 1.6]} intensity={6 * fk} distance={4} color="#ffffff" />;
+      })()}
       {/* stille og roligt: regn/støv fryser + varm lampe-glød */}
       {calm > 0 && <Glow pos={[0, 2.4, -0.6]} s={2.4} tex={tx.warm} op={calm * 0.5} />}
       {/* familien i et vindue */}
-      {famOn > 0 && <><Panel pos={[-0.62, 2.45, -1.9]} w={0.7} h={0.88} tex={tx.fam} op={famOn} rot={[0, 0.2, 0]} /><pointLight position={[-0.6, 2.4, -1.4]} intensity={3 * famOn} distance={3} color="#ffc070" /></>}
+      {famOn > 0 && <Panel pos={[-0.62, 2.45, -1.9]} w={0.7} h={0.88} tex={tx.fam} op={famOn} rot={[0, 0.2, 0]} />}
+      <pointLight position={[-0.6, 2.4, -1.4]} intensity={3 * famOn} distance={3} color="#ffc070" />
       {t > glem - 0.2 && t < glem + 1.6 &&
         tx.photos.map((p, i) => {
           const k = t - glem - i * 0.1;
@@ -320,7 +325,7 @@ export const Scene3D: React.FC<{ t: number }> = ({ t }) => {
             <Character t={t + x} look={{ jacket: x < 0 ? "#3a6a8a" : "#8a3a5a", inner: "#1a2238", lens: "#ff8aa8", glow: 0.3, screen: tx.lock }} />
           </group>
         ))}
-      <Character t={t} look={{ jacket: "#3b4232", inner: "#1a2238", lens: "#ff8aa8", glow: 1, screen }} phoneUp={phoneUp} heart={heart} nod={beatPulse(t) * 0.25} />
+      <Character t={t} look={{ jacket: "#3b4232", inner: "#1a2238", lens: "#ff8aa8", glow: 1, screen }} phoneUp={phoneUp} heart={heart} nod={beatPulse(t) * 0.25} lights />
     </group>
   );
 };

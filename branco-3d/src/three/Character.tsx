@@ -46,7 +46,7 @@ const place = (a: THREE.Vector3, b: THREE.Vector3) => {
   return { pos: a, q: new THREE.Quaternion().setFromUnitVectors(new THREE.Vector3(0, 1, 0), d.clone().normalize()), len: d.length() };
 };
 
-export const Character: React.FC<{ t: number; look: CharLook; nod?: number; turn?: number; phoneUp?: number; down?: boolean; chain?: boolean; back?: THREE.Texture | null; heart?: number }> = ({ t, look, nod = 0, turn = 0, phoneUp = 0, down = false, chain: showChain = true, back = null, heart = 0 }) => {
+export const Character: React.FC<{ t: number; look: CharLook; nod?: number; turn?: number; phoneUp?: number; down?: boolean; chain?: boolean; back?: THREE.Texture | null; heart?: number; lights?: boolean }> = ({ t, look, nod = 0, turn = 0, phoneUp = 0, down = false, chain: showChain = true, back = null, heart = 0, lights = false }) => {
   const mats = useMemo(
     () => ({
       jacket: new THREE.MeshPhysicalMaterial({ color: look.jacket, roughness: 0.52, metalness: 0, clearcoat: 0.25, clearcoatRoughness: 0.5, sheen: 0.5, sheenColor: new THREE.Color("#9aa88a"), sheenRoughness: 0.6 }),
@@ -156,7 +156,7 @@ export const Character: React.FC<{ t: number; look: CharLook; nod?: number; turn
           <meshBasicMaterial color="#ffffff" map={look.screen ?? null} toneMapped={false} />
         </mesh>
       </group>}
-      {!down && <pointLight position={[0, 1.2 + ph * 0.2, 0.38]} intensity={0.35 * look.glow} distance={0.7} decay={2} color="#bcd0ff" />}
+      {lights && <pointLight position={[0, 1.2 + ph * 0.2, 0.38]} intensity={0.35 * look.glow} distance={0.7} decay={2} color="#bcd0ff" />}
       {/* hoved */}
       <group position={[0, 1.66, 0.015]} rotation={[0.14 - ph * 0.12 + nod * 0.2, 0, 0]}>
         <mesh scale={[0.083, 0.112, 0.098]} material={mats.knit}><sphereGeometry args={[1, 48, 32]} /></mesh>
@@ -200,10 +200,10 @@ export const Character: React.FC<{ t: number; look: CharLook; nod?: number; turn
           <meshBasicMaterial map={back} transparent toneMapped={false} />
         </mesh>
       )}
-      {heart > 0 && (
+      {lights && (
         <group position={[-0.06, 1.3, 0.16]}>
           <pointLight intensity={1.2 * heart} distance={1.2} decay={2} color="#ff2a3a" />
-          <mesh scale={0.06 + heart * 0.03}><sphereGeometry args={[1, 16, 12]} /><meshBasicMaterial color="#ff3a4a" transparent opacity={0.35 * heart} toneMapped={false} /></mesh>
+          <mesh scale={0.06 + heart * 0.03} visible={heart > 0}><sphereGeometry args={[1, 16, 12]} /><meshBasicMaterial color="#ff3a4a" transparent opacity={0.35 * heart} toneMapped={false} /></mesh>
         </group>
       )}
       {showChain && <group position={[0, 1.245, 0.178]} rotation={[0.25, 0, Math.sin(t * 2) * 0.05]}>
