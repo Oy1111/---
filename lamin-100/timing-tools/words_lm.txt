@@ -1,0 +1,16 @@
+{magic}Juu'en 15.05|helt 15.85|*magisk, 16.0|/|*hokus 16.35|*pokus 16.85
+{focus}Jeg 17.25|var 17.55|lige 17.95|ved 18.1|at 18.15|mist' 18.25|mit 18.45|*fokus 18.68
+{gold}Brugt 19.15|så 19.25|meget 19.45|tid 19.72|/|på 20.0|at 20.1|jagt' 20.2|en 20.42|*bonus 20.58
+{rewind}Og 21.25|jeg 21.45|vil' 21.7|gøre 22.0|det 22.1|*igen, 22.3|/|for 22.75|jeg 22.95|vil 23.05|ik 23.2|*tænk' 23.35
+{spin}bar' 23.62|drej 23.8|på 24.0|en 24.15|*globus 24.35
+{chat}Hvorfor 24.75|sku' 25.35|jeg 25.6|snak' 25.8|med 26.0|*dem 26.2|/|og 26.42|med 26.52|*dem 26.72|og 26.9|med 27.03|*dem? 27.2
+{glitch}Det 27.5|ka' 27.6|jeg 27.72|ik' 27.85|bruge 28.0|*nu 28.28|/|*ey, 28.6|*ey, 28.85|*ey 29.1
+{heart}Svært 30.35|at 30.85|fortæl' 31.0|/|hvordan 32.55|det 32.95|*føles 33.15|for 33.4|mig 33.5
+{percent}Om 33.85|jeg 34.15|vil 34.35|gøre 34.55|det 34.78|igen? 34.92|/|*Hundrede 36.05|*procent 36.8
+{heart}Svært 37.8|at 38.3|fortæl' 38.45|/|hvordan 40.0|det 40.4|*føles 40.6|for 40.85|mig 41.0
+{percent}Om 41.3|jeg 41.6|vil 41.8|gøre 42.05|det 42.25|igen? 42.4|/|*Hundrede 43.5|*procent 44.25
+{mono}Bror 45.0|gi'r 45.3|stadig 45.4|*instrukser, 45.72|/|før 46.28|det 46.52|bliver 46.7|sendt 46.9|på 47.0|en 47.12|*taxatur 47.3
+{ticket}*Tur-retur, 48.9|/|gi' 49.8|ham 49.95|hans 50.2|del, 50.58|*habibi-bror 50.8
+{receipt}Ik' 52.25|tænk 52.48|på, 52.7|hva' 53.1|vi 53.2|*bruger, 53.35|/|nah, 53.6|ik' 54.15|tænk' 54.6|på 54.8|det, 54.98|min 55.05|*bror 55.2
+{route}Mig, 55.45|jeg' 55.62|på 55.82|en 56.0|tur 56.15|/|fra 56.4|*Dam 56.55|til 56.8|*Barca, 57.08|/|Frank 57.55|De 57.72|*Boer 57.82
+{gold}Forstår 58.0|du, 58.6|min 58.78|bror, 58.95|/|jeg 59.22|holder 59.32|mit 59.62|*ord 59.8
