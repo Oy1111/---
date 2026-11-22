@@ -24,14 +24,14 @@ export const FX: React.FC = () => {
   return (
     <AbsoluteFill style={{ pointerEvents: "none" }}>
       <AbsoluteFill style={{ background: "radial-gradient(ellipse at 50% 45%, rgba(0,0,0,0) 45%, rgba(0,0,0,.72) 100%)" }} />
-      {!COMIC && <svg width={W} height={H} style={{ position: "absolute", inset: 0, mixBlendMode: "overlay", opacity: 0.22 }}>
+      {!COMIC && <svg width={W} height={H} style={{ position: "absolute", inset: 0, mixBlendMode: "overlay", opacity: 0.1 }}>
         <filter id={`grain${seed}`}>
           <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" seed={seed} stitchTiles="stitch" />
           <feColorMatrix type="saturate" values="0" />
         </filter>
         <rect width={W} height={H} filter={`url(#grain${seed})`} />
       </svg>}
-      {!COMIC && <AbsoluteFill
+      {false && <AbsoluteFill
         style={{
           backgroundImage: "repeating-linear-gradient(0deg, rgba(0,0,0,.12) 0px, rgba(0,0,0,.12) 1px, transparent 2px, transparent 4px)",
           opacity: 0.35,

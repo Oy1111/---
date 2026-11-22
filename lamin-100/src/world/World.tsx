@@ -2,7 +2,8 @@ import React from "react";
 import { random } from "remotion";
 import { Building, BuildingSpec, GROUND, topOf } from "./Building";
 import { StreetLamp, Bike, Car, Bin } from "./Props";
-import { Figure } from "./Figure";
+import { Person, LOOKS, joints } from "./Person";
+import { CarInterior } from "./CarInterior";
 import { ClubPOV } from "./Club";
 import { beatPulse, clamp, easeOut, lerp, smooth } from "../lib";
 import { wordTimes } from "../data/timing";
@@ -75,35 +76,55 @@ const Street: React.FC = () => (
 
 /* ---------- bygning B: altan med en der ryger ---------- */
 const BAL = { x: 1137, y: 1874 };
+const SM_S = 1.15;
 const Smoker: React.FC<{ t: number }> = ({ t }) => {
   const juu = f0(0, "juuen") ?? 5.05;
   const helt = f0(0, "helt") ?? 5.8;
   const magisk = f0(0, "magisk") ?? 6;
-  const inhale = clamp((t - (juu - 0.25)) / 0.5) * (1 - clamp((t - helt) / 0.3));
-  const k = t > juu - 0.4 && t < helt + 0.2 ? 0 : 0.0;
+  // hånden op til munden lige før "Juu'en", trækker, ned igen på "helt"
+  const k = clamp((t - (juu - 0.55)) / 0.35) * (1 - clamp((t - (helt - 0.15)) / 0.35));
+  const inhale = clamp((t - (juu - 0.2)) / 0.5) * (1 - clamp((t - helt) / 0.25));
   const ember = 0.35 + inhale * 0.65 + Math.sin(t * 9) * 0.05;
-  const hand = { x: BAL.x + 22, y: BAL.y - 186 };
+  const px = BAL.x + 6, py = BAL.y + 4;
+  const J = joints("smoke", t, k);
+  const wr = J.wr[1];
+  // joint i lokale koordinater: fra fingrene ud og lidt op
+  const ang = lerp(-18, -8, k);
+  const len = 38;
+  const tip: [number, number] = [wr[0] + 4 + Math.cos((ang * Math.PI) / 180) * len, wr[1] - 3 + Math.sin((ang * Math.PI) / 180) * len];
+  const tipW: [number, number] = [px + tip[0] * SM_S, py + tip[1] * SM_S];
   return (
     <g>
       {/* lys fra altandøren bag ham */}
-      <rect x={BAL.x - 70} y={BAL.y - 250} width={140} height={250} fill="url(#gWinLit)" />
-      <rect x={BAL.x - 70} y={BAL.y - 250} width={140} height={250} fill="none" stroke="#3a2a1e" strokeWidth={8} />
-      <rect x={BAL.x - 3} y={BAL.y - 250} width={6} height={250} fill="#3a2a1e" />
-      <ellipse cx={BAL.x} cy={BAL.y - 120} rx={240} ry={200} fill="url(#rWarm)" opacity={0.7} />
-      <Figure id="smoker" x={BAL.x + 20} y={BAL.y} s={1} pose="smoke" t={t} k={k} flip rim="#ffb45a" side={-1} />
-      {/* joint: glød */}
-      <g transform={`translate(${hand.x - 10},${hand.y + 4})`}>
-        <rect x={-34} y={-3} width={34} height={6} fill="#efe6d2" transform="rotate(-12)" />
-        <circle cx={-36} cy={6} r={5 + inhale * 3} fill="#ff7a1a" />
-        <circle cx={-36} cy={6} r={40 + inhale * 50} fill="url(#rEmber)" opacity={ember} />
+      <rect x={BAL.x - 80} y={BAL.y - 270} width={160} height={270} fill="url(#gWinLit)" />
+      <rect x={BAL.x - 80} y={BAL.y - 270} width={160} height={270} fill="none" stroke="#2a1e14" strokeWidth={9} />
+      <rect x={BAL.x - 3} y={BAL.y - 270} width={6} height={270} fill="#2a1e14" />
+      <path d={`M${BAL.x + 10},${BAL.y - 250} l50,0 l0,90 l-50,0Z`} fill="#3a2010" opacity={0.3} />
+      <ellipse cx={BAL.x} cy={BAL.y - 120} rx={260} ry={220} fill="url(#rWarm)" opacity={0.75} />
+      <Person id="smoker" x={px} y={py} s={SM_S} pose="smoke" look={LOOKS.smoker} t={t} k={k} light={-1} rim="#ffc27a" glowFace={inhale} noLegs />
+      {/* jointen */}
+      <g transform={`translate(${px},${py}) scale(${SM_S})`}>
+        <g transform={`translate(${wr[0] + 4},${wr[1] - 3}) rotate(${ang})`}>
+          {/* papir-kegle: smal ved filteret, bredere mod spidsen */}
+          <path d={`M0,-1.6 L${len - 3},-3.4 L${len - 3},3.4 L0,1.6Z`} fill="#f1ebde" />
+          <path d={`M0,0.6 L${len - 3},1.8 L${len - 3},3.4 L0,1.6Z`} fill="#c9bfae" />
+          <rect x={-1} y={-1.7} width={7} height={3.4} fill="#c8a978" />
+          <path d={`M8,-1.8 l2,3.6 M15,-2.5 l2,5 M22,-3 l2,6`} stroke="#d8cfbe" strokeWidth={0.6} />
+          {/* aske + glød */}
+          <path d={`M${len - 3},-3.4 L${len},-2.6 L${len + 1.5},0 L${len},2.6 L${len - 3},3.4Z`} fill="#8a857c" />
+          <circle cx={len + 0.5} cy={0} r={2.4 + inhale * 1.2} fill="#ff6a10" />
+          <circle cx={len + 0.5} cy={0} r={1.2 + inhale} fill="#ffe0a0" />
+        </g>
       </g>
+      <circle cx={tipW[0]} cy={tipW[1]} r={40 + inhale * 60} fill="url(#rEmber)" opacity={ember} style={{ mixBlendMode: "screen" }} />
       {/* gelænder foran ham */}
-      <rect x={BAL.x - 132} y={BAL.y - 114} width={265} height={8} fill="#1a1d26" />
+      <rect x={BAL.x - 132} y={BAL.y - 114} width={265} height={8} fill="#14161e" />
       {Array.from({ length: 9 }).map((_, i) => (
-        <rect key={i} x={BAL.x - 132 + i * 33} y={BAL.y - 110} width={4} height={110} fill="#1a1d26" />
+        <rect key={i} x={BAL.x - 132 + i * 33} y={BAL.y - 110} width={4} height={110} fill="#14161e" />
       ))}
-      <rect x={BAL.x - 132} y={BAL.y - 110} width={265} height={110} fill="#2a3448" opacity={0.3} />
-      <Smoke t={t} sx={hand.x - 46} sy={hand.y} juu={juu} helt={helt} magisk={magisk} />
+      <rect x={BAL.x - 132} y={BAL.y - 110} width={265} height={110} fill="#2a3448" opacity={0.45} />
+      <rect x={BAL.x - 140} y={BAL.y} width={280} height={26} fill="#4a4850" />
+      <Smoke t={t} sx={tipW[0]} sy={tipW[1]} juu={juu} helt={helt} magisk={magisk} />
     </g>
   );
 };
@@ -116,38 +137,42 @@ const Smoke: React.FC<{ t: number; sx: number; sy: number; juu: number; helt: nu
   // tynd røgstribe
   for (let i = 0; i < 14; i++) {
     const age = (t * 0.7 + i / 14) % 1;
-    els.push(<circle key={`w${i}`} cx={sx + Math.sin(age * 6 + i) * 18 * age + age * 30} cy={sy - age * 260} r={8 + age * 30} fill="url(#rSmoke)" opacity={(1 - age) * 0.8} />);
+    els.push(<circle key={`w${i}`} cx={sx + Math.sin(age * 6 + i * 0.7) * 16 * age + age * 24} cy={sy - age * 240} r={3 + age * 16} fill="#d9d4ca" opacity={(1 - age) * 0.22} />);
   }
-  // udpust
+  // udpust: blød, gennemsigtig røgfane der udvider sig og driver
+  const puff: React.ReactNode[] = [];
+  const gl: React.ReactNode[] = [];
   if (t > helt - 0.1) {
     const d = t - (helt - 0.1);
     const gold = clamp((t - magisk) / 0.3);
     const fly = clamp((t - hokus) / (pokus - hokus + 0.05));
-    for (let i = 0; i < 26; i++) {
+    for (let i = 0; i < 46; i++) {
+      const u = i / 46;
       const a = random(`pa${i}`) * Math.PI * 2;
       const rr = random(`pr${i}`);
-      // fra munden ud i en sky, derefter mod klubskiltet (2200, 2230)
-      const cx0 = sx + 40 + Math.cos(a) * rr * 120 * Math.min(1, d * 1.5) + d * 40;
-      const cy0 = sy - 40 + Math.sin(a) * rr * 80 * Math.min(1, d * 1.5) - d * 30;
-      const tx = 2200 + Math.cos(a) * rr * 260;
-      const ty = 2240 + Math.sin(a) * rr * 60;
-      const e = smooth(fly);
-      const arc = Math.sin(e * Math.PI) * -260;
+      const spread = Math.min(1, d * 1.2);
+      const cx0 = sx + u * 170 * spread + Math.cos(a) * rr * 50 * spread + Math.sin(t * 1.5 + i) * 8;
+      const cy0 = sy - u * 70 * spread + Math.sin(a) * rr * 40 * spread - d * 25;
+      const tx = 2200 + Math.cos(a) * rr * 280;
+      const ty = 2250 + Math.sin(a) * rr * 70;
+      const e = smooth(clamp(fly * 1.1 - u * 0.1));
       const cx = lerp(cx0, tx, e);
-      const cy = lerp(cy0, ty, e) + arc;
-      const op = (1 - clamp((t - pokus - 0.2) / 0.5)) * 0.9;
-      els.push(<circle key={`p${i}`} cx={cx} cy={cy} r={40 + rr * 50 + d * 20} fill="url(#rSmoke)" opacity={op} />);
-      if (gold > 0) {
-        const s = (4 + random(`ps${i}`) * 8) * gold * (0.6 + 0.4 * Math.abs(Math.sin(t * 7 + i)));
-        els.push(
-          <g key={`g${i}`} transform={`translate(${cx + Math.cos(i) * 30},${cy + Math.sin(i) * 30}) rotate(${t * 120 + i * 30})`} opacity={op}>
-            <path d={`M0,${-s * 2} L${s * 0.35},${-s * 0.35} L${s * 2},0 L${s * 0.35},${s * 0.35} L0,${s * 2} L${-s * 0.35},${s * 0.35} L${-s * 2},0 L${-s * 0.35},${-s * 0.35}Z`} fill="#ffe6a3" />
+      const cy = lerp(cy0, ty, e) + Math.sin(e * Math.PI) * -240;
+      const op = (1 - clamp((t - pokus - 0.15) / 0.5)) * (0.16 + (1 - u) * 0.12);
+      puff.push(<circle key={`p${i}`} cx={cx} cy={cy} r={10 + u * 26 + d * 14 + rr * 10} fill="#d9d4ca" opacity={op} />);
+      if (gold > 0 && i % 2 === 0) {
+        const s = (2.5 + random(`ps${i}`) * 5) * gold * (0.6 + 0.4 * Math.abs(Math.sin(t * 7 + i)));
+        gl.push(
+          <g key={`g${i}`} transform={`translate(${cx + Math.cos(i) * 14},${cy + Math.sin(i) * 14}) rotate(${t * 120 + i * 30})`} opacity={op * 4}>
+            <path d={`M0,${-s * 2} L${s * 0.3},${-s * 0.3} L${s * 2},0 L${s * 0.3},${s * 0.3} L0,${s * 2} L${-s * 0.3},${s * 0.3} L${-s * 2},0 L${-s * 0.3},${-s * 0.3}Z`} fill="#ffe6a3" />
             <circle r={s * 3} fill="url(#rHot)" opacity={0.6} />
           </g>,
         );
       }
     }
   }
+  els.push(<g key="puff" filter="url(#fBlur6)">{puff}</g>);
+  els.push(<g key="gl">{gl}</g>);
   return <g>{els}</g>;
 };
 
@@ -202,9 +227,9 @@ const Club: React.FC<{ t: number }> = ({ t }) => {
         </g>
       ))}
       <path d={`M1900,${GROUND + 22} Q1960,${GROUND + 60} 2020,${GROUND + 22}`} stroke="#8a1020" strokeWidth={8} fill="none" />
-      <Figure id="bouncer" x={2360} y={GROUND + 70} s={1.12} pose="lean" t={t} rim="#7ae8ff" side={1} />
-      <Figure id="q1" x={1800} y={GROUND + 60} s={1} pose="phone" t={t} rim="#ff7ad8" side={1} />
-      <Figure id="q2" x={1690} y={GROUND + 64} s={0.98} pose="talk" t={t} rim="#ffb45a" side={-1} flip />
+      <Person id="bouncer" x={2370} y={GROUND + 70} s={1.15} pose="crossed" look={LOOKS.bouncer} t={t} light={-1} rim="#7ae8ff" flip />
+      <Person id="q1" x={1810} y={GROUND + 60} s={1.02} pose="phone" look={LOOKS.q1} t={t} light={1} rim="#ff7ad8" />
+      <Person id="q2" x={1700} y={GROUND + 66} s={1.04} pose="talk" look={LOOKS.q2} t={t + 0.7} light={-1} rim="#ffb45a" />
     </g>
   );
 };
@@ -378,8 +403,8 @@ const Groups: React.FC<{ t: number }> = ({ t }) => {
         return (
           <g key={i}>
             <ellipse cx={g.x} cy={GROUND + 60} rx={200} ry={40} fill="url(#rWarm)" opacity={on * 0.7} />
-            <Figure id={`g${i}a`} x={g.x - 55} y={GROUND + 60} s={0.95} pose={i === 1 ? "phone" : "talk"} t={t + i} rim={rim} side={-1} />
-            <Figure id={`g${i}b`} x={g.x + 55} y={GROUND + 70} s={1.02} pose={i === 2 ? "lean" : "stand"} t={t} rim={rim} side={1} flip />
+            <Person id={`g${i}a`} x={g.x - 55} y={GROUND + 60} s={1.0} pose={i === 1 ? "phone" : "talk"} look={LOOKS[`g${i * 2 + 1}`]} t={t + i} light={1} rim={rim} />
+            <Person id={`g${i}b`} x={g.x + 55} y={GROUND + 70} s={1.05} pose={i === 2 ? "crossed" : "stand"} look={LOOKS[`g${i * 2 + 2}`]} t={t + i * 0.4} light={-1} rim={rim} flip />
             {on > 0 && (
               <g transform={`translate(${g.x},${GROUND - 250 - on * 20}) scale(${on})`}>
                 <rect x={-110} y={-56} width={220} height={70} rx={30} fill="#f4f1ea" />
@@ -500,51 +525,35 @@ const RoofSitter: React.FC<{ t: number }> = ({ t }) => {
   return (
     <g>
       <circle cx={6070} cy={fTop - 180} r={140 + hb * 40} fill="url(#rRed)" opacity={glow * (0.4 + hb * 0.4)} style={{ mixBlendMode: "screen" }} />
-      <Figure id="sitter" x={6040} y={fTop - 64} s={0.95} pose="sit" t={t} rim="#9cc4ff" side={1} />
+      <Person id="sitter" x={6030} y={fTop - 64} s={1.0} pose="sit" look={LOOKS.sitter} t={t} light={1} rim="#9cc4ff" />
       <circle cx={6080} cy={fTop - 210} r={50} fill="url(#rBlue)" opacity={0.5} />
     </g>
   );
 };
 
 /* ---------- G: parkeret bil med speedometer ---------- */
-export const GAUGE = { x: 6470, y: 2664 };
+export const CARWIN = { x: 6647.3, y: 2627, w: 39.375, h: 70 };
 const ParkedCar: React.FC<{ t: number }> = ({ t }) => {
-  const om = f0(10, "om") ?? 41.3;
-  const hu = f0(10, "hundrede") ?? 43.5;
-  const pr = f0(10, "procent") ?? 44.25;
-  const lt = t + 0; // sang-tid er allerede video-tid
-  const p = lt < om ? 0 : lt < hu ? clamp((lt - om) / (hu - om)) * 0.82 : lerp(0.82, 1, ap(lt, hu, pr - hu));
-  const full = ap(lt, pr, 0.2);
+  const om = f0(10, "om") ?? 31.3;
+  const hu = f0(10, "hundrede") ?? 33.5;
+  const pr = f0(10, "procent") ?? 34.25;
+  const p = t < om ? 0 : t < hu ? clamp((t - om) / (hu - om)) * 0.82 : lerp(0.82, 1, ap(t, hu, pr - hu));
+  const full = ap(t, pr, 0.2);
+  const showIn = t > 30.5 && t < 36;
   return (
     <g>
       <Car x={6600} y={2860} s={1.05} dir={-1} lights={0} />
-      {/* interiør set gennem sideruden: instrumentbræt der vender mod os */}
-      <g transform={`translate(${GAUGE.x},${GAUGE.y}) scale(0.78)`}>
-        <clipPath id="dashClip"><path d="M-110,-48 L110,-48 L120,52 L-120,52Z" /></clipPath>
-        <g clipPath="url(#dashClip)">
-          <rect x={-130} y={-60} width={260} height={120} fill="#05060c" />
-          <circle r={120} fill="url(#rRed)" opacity={0.2 + full * 0.5} />
-          <circle r={42} fill="#0a0b12" stroke="#2a2f3c" strokeWidth={3} />
-          {Array.from({ length: 11 }).map((_, i) => {
-            const a = ((-225 + i * 27) * Math.PI) / 180;
-            return (
-              <g key={i}>
-                <line x1={Math.cos(a) * 32} y1={Math.sin(a) * 32} x2={Math.cos(a) * 39} y2={Math.sin(a) * 39} stroke={i >= 9 ? "#ff3b30" : "#e8e8f0"} strokeWidth={1.6} />
-                <text x={Math.cos(a) * 25} y={Math.sin(a) * 25 + 2.5} textAnchor="middle" fontFamily="Anton" fontSize={7} fill={i === 10 ? "#ffc861" : "#ccd"}>{i * 10}</text>
-              </g>
-            );
-          })}
-          <path d="M-1.6,0 L0,-38 L1.6,0Z" fill="#ff5a3c" transform={`rotate(${-135 + p * 270 + Math.sin(t * 50) * full * 1.5})`} />
-          <circle r={5} fill="#2a2f3c" />
-          <text x={0} y={22} textAnchor="middle" fontFamily="Anton" fontSize={11} fill="#ffc861">{Math.round(p * 100)}%</text>
-          <circle cx={-80} r={26} fill="#0a0b12" stroke="#2a2f3c" strokeWidth={2} />
-          <circle cx={80} r={26} fill="#0a0b12" stroke="#2a2f3c" strokeWidth={2} />
-          <path d="M-80,0 L-80,-20" stroke="#3de0ff" strokeWidth={2} transform={`rotate(${-60 + p * 100} -80 0)`} />
-          <path d="M80,0 L80,-20" stroke="#3de0ff" strokeWidth={2} transform={`rotate(${-30 + p * 60} 80 0)`} />
-          {/* rat i forgrunden */}
-          <circle cx={0} cy={70} r={70} fill="none" stroke="#0b0c10" strokeWidth={14} />
+      {showIn && (
+        <g>
+          <clipPath id="carWinClip"><rect x={CARWIN.x} y={CARWIN.y} width={CARWIN.w} height={CARWIN.h} /></clipPath>
+          <g clipPath="url(#carWinClip)">
+            <g transform={`translate(${CARWIN.x},${CARWIN.y}) scale(${CARWIN.h / 1920})`}>
+              <CarInterior t={t} p={p} full={full} />
+            </g>
+          </g>
         </g>
-      </g>
+      )}
+      <rect x={CARWIN.x - 60} y={CARWIN.y - 6} width={160} height={84} fill="url(#rBlue)" opacity={0.35} style={{ mixBlendMode: "screen" }} />
     </g>
   );
 };
@@ -565,7 +574,7 @@ const Taxi: React.FC<{ t: number }> = ({ t }) => {
     <g>
       {!inCar && (
         <g>
-          <Figure id="runner" x={lerp(5560, 5760, walk)} y={GROUND + 120} s={1.05} pose={walk > 0 && walk < 1 ? "walk" : "phone"} t={t} rim="#ffb45a" side={1} />
+          <Person id="runner" x={lerp(5560, 5760, walk)} y={GROUND + 120} s={1.08} pose={walk > 0 && walk < 1 ? "walk" : "phone"} look={LOOKS.runner} t={t} light={1} rim="#ffb45a" />
           {["kl. 02:00", "bagindgangen", "ingen navne", "tur-retur"].map((m, i) => {
             const a = clamp((t - ins) * 3 - i * 0.7);
             if (a <= 0) return null;
@@ -605,14 +614,14 @@ const Friends: React.FC<{ t: number }> = ({ t }) => {
   const blow = Math.max(0, t - nah);
   return (
     <g>
-      <Figure id="fa" x={xa} y={GROUND + 90} s={1.05} pose={pose as "dap"} t={t} k={k} rim="#ffb45a" side={-1} />
-      <Figure id="fb" x={xb} y={GROUND + 96} s={1.08} pose={pose as "dap"} t={t} k={k} flip rim="#ffcf86" side={1} />
+      <Person id="fa" x={xa} y={GROUND + 90} s={1.08} pose={pose as "dap"} look={LOOKS.fa} t={t} k={k} light={-1} rim="#ffb45a" />
+      <Person id="fb" x={xb} y={GROUND + 96} s={1.1} pose={pose as "dap"} look={LOOKS.fb} t={t + 0.5} k={k} flip light={-1} rim="#ffcf86" />
       {phase === "dap" && dap >= 1 && <circle cx={(xa + xb) / 2} cy={GROUND - 70} r={140} fill="url(#rHot)" opacity={Math.exp(-(t - hb) * 3)} />}
       {phase === "shake" && shake >= 1 && <circle cx={(xa + xb) / 2} cy={GROUND - 30} r={200} fill="url(#rHot)" opacity={0.3 + 0.7 * Math.exp(-(t - ho) * 2)} />}
       {phase === "bags" && (
         <g>
-          {[[xa - 60, "#e9e2d2"], [xa + 62, "#141418"], [xb - 62, "#c8a25a"], [xb + 60, "#e9e2d2"]].map(([x, c], i) => (
-            <g key={i} transform={`translate(${x},${GROUND + 10})`}>
+          {[[xa - 52, "#e9e2d2"], [xa + 52, "#141418"], [xb - 53, "#c8a25a"], [xb + 53, "#e9e2d2"]].map(([x, c], i) => (
+            <g key={i} transform={`translate(${x},${GROUND + 40})`}>
               <path d="M-36,-60 L36,-60 L42,40 L-42,40Z" fill={c as string} />
               <path d="M-16,-60 Q-16,-96 0,-96 Q16,-96 16,-60" fill="none" stroke="#000" strokeWidth={4} opacity={0.6} />
             </g>
@@ -630,6 +639,44 @@ const Friends: React.FC<{ t: number }> = ({ t }) => {
     </g>
   );
 };
+
+/* ---------- mørke i gadeplan med lyspøler omkring lygter, butikker og neon ---------- */
+const HOLES: [number, number, number][] = [
+  ...LAMPS.map((x) => [x, GROUND - 470, 620] as [number, number, number]),
+  ...LAMPS.map((x) => [x, GROUND + 150, 520] as [number, number, number]),
+  [200, 2420, 420], [1250, 2420, 360], [3150, 2420, 380], [5550, 2420, 420], [6600, 2420, 420],
+  [2200, 2280, 560], [1137, 1760, 330], [3800, 2420, 330], [4160, 2420, 330], [4615, 2420, 280],
+];
+const Darkness: React.FC = () => (
+  <g>
+    <defs>
+      <linearGradient id="gDarkV" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" stopColor="#000" />
+        <stop offset="0.4" stopColor="#fff" />
+        <stop offset="1" stopColor="#fff" />
+      </linearGradient>
+      <radialGradient id="rHole">
+        <stop offset="0" stopColor="#000" stopOpacity="1" />
+        <stop offset="0.45" stopColor="#000" stopOpacity="0.7" />
+        <stop offset="1" stopColor="#000" stopOpacity="0" />
+      </radialGradient>
+      <mask id="darkMask" maskUnits="userSpaceOnUse" x={-1500} y={1300} width={10500} height={2400}>
+        <rect x={-1500} y={1300} width={10500} height={2400} fill="url(#gDarkV)" />
+        {HOLES.map(([x, y, r], i) => (
+          <ellipse key={i} cx={x} cy={y} rx={r} ry={r * 0.85} fill="url(#rHole)" />
+        ))}
+      </mask>
+    </defs>
+    <rect x={-1500} y={1300} width={10500} height={2400} fill="#02030c" opacity={0.62} mask="url(#darkMask)" />
+    {/* neon-refleks i den våde vej */}
+    <g filter="url(#fBlur14)" opacity={0.5}>
+      <rect x={1940} y={GROUND + 200} width={140} height={360} fill="#ff3dc8" opacity={0.35} />
+      <rect x={2330} y={GROUND + 200} width={140} height={360} fill="#3de0ff" opacity={0.35} />
+    </g>
+    {/* lavtliggende dis */}
+    <rect x={-1500} y={GROUND - 260} width={10500} height={520} fill="url(#gHaze)" />
+  </g>
+);
 
 /* ---------- belysning fra lygter på facaderne ---------- */
 const LampWash: React.FC = () => (
@@ -652,6 +699,7 @@ export const World: React.FC<{ t: number; view: [number, number, number, number]
       {BUILDINGS.filter((b) => near(b.x - 300, b.x + b.w + 300)).map((b) => (
         <Building key={b.id} b={b} />
       ))}
+      <Darkness />
       <LampWash />
       {rooftop && near(5000, 6800) && <Billboard t={t} />}
       {rooftop && near(5600, 6400) && t > 26 && t < 33 && <RoofSitter t={t} />}

@@ -167,6 +167,23 @@ export const WorldDefs: React.FC = () => (
       <stop offset="0" stopColor="#fffbea" stopOpacity="0.5" />
       <stop offset="1" stopColor="#c8d4ff" stopOpacity="0" />
     </radialGradient>
+    <linearGradient id="gShadeR" x1="0" y1="0" x2="1" y2="0.15">
+      <stop offset="0" stopColor="#fff" stopOpacity="0.2" />
+      <stop offset="0.32" stopColor="#fff" stopOpacity="0" />
+      <stop offset="0.6" stopColor="#000" stopOpacity="0.12" />
+      <stop offset="1" stopColor="#000" stopOpacity="0.6" />
+    </linearGradient>
+    <linearGradient id="gShadeL" x1="1" y1="0" x2="0" y2="0.15">
+      <stop offset="0" stopColor="#fff" stopOpacity="0.2" />
+      <stop offset="0.32" stopColor="#fff" stopOpacity="0" />
+      <stop offset="0.6" stopColor="#000" stopOpacity="0.12" />
+      <stop offset="1" stopColor="#000" stopOpacity="0.6" />
+    </linearGradient>
+    <linearGradient id="gHaze" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stopColor="#6a6a9a" stopOpacity="0" />
+      <stop offset="0.6" stopColor="#6a6a9a" stopOpacity="0.12" />
+      <stop offset="1" stopColor="#6a6a9a" stopOpacity="0" />
+    </linearGradient>
     <filter id="fBlur2"><feGaussianBlur stdDeviation="2" /></filter>
     <filter id="fBlur6"><feGaussianBlur stdDeviation="6" /></filter>
     <filter id="fBlur14"><feGaussianBlur stdDeviation="14" /></filter>
