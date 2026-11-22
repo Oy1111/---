@@ -48,6 +48,23 @@ const KeyWord: React.FC<{ w: Word; t: number; style: string; size: number }> = (
         </span>
       );
     }
+    case "smoke": {
+      const sm = 1 - easeOut(d / 0.5);
+      return (
+        <span style={{ ...base, ...goldText("linear-gradient(180deg,#ffffff 0%,#e8e2d6 35%,#f6cf6a 70%,#a8701e 100%)"), letterSpacing: sm * 40, filter: `blur(${sm * 14}px) drop-shadow(0 0 22px rgba(255,240,210,.55)) drop-shadow(0 6px 8px #000)`, transform: `scale(${scale}) translateY(${sm * 30}px)` }}>
+          {txt}
+        </span>
+      );
+    }
+    case "drunk": {
+      const dx = 10 + Math.sin(t * 2.1) * 8;
+      return (
+        <span style={{ ...base, position: "relative", transform: `scale(${scale}) rotate(${Math.sin(t * 1.3) * 5}deg)`, filter: `blur(${Math.max(0, Math.sin(t * 2.7)) * 2}px)` }}>
+          <span style={{ position: "absolute", left: dx, top: dx * 0.3, ...goldText(), opacity: 0.45 }}>{txt}</span>
+          <span style={{ position: "relative", ...goldText() }}>{txt}</span>
+        </span>
+      );
+    }
     case "focus":
       return <span style={{ ...base, ...goldText(), filter: `blur(${(1 - k) * 18}px) drop-shadow(0 6px 10px #000)` }}>{txt}</span>;
     case "rewind":
@@ -113,7 +130,7 @@ const SmallWord: React.FC<{ w: Word; t: number; style: string }> = ({ w, t, styl
   const on = d >= 0;
   const k = easeOut(d / 0.15);
   const font = style === "chat" || style === "mono" || style === "receipt" ? "SpaceMonoB" : "Anton";
-  const blur = style === "focus" && !on ? 6 : 0;
+  const blur = (style === "focus" || style === "smoke") && !on ? 6 : style === "smoke" ? Math.max(0, 1 - d / 0.3) * 8 : 0;
   return (
     <span
       style={{
@@ -126,7 +143,7 @@ const SmallWord: React.FC<{ w: Word; t: number; style: string }> = ({ w, t, styl
         opacity: on ? 1 : 0.28,
         textShadow: SHADOW,
         textTransform: "uppercase",
-        transform: `translateY(${on ? (1 - k) * -10 : 0}px)`,
+        transform: style === "drunk" ? `translateY(${Math.sin(t * 2 + w.t * 7) * 8}px) rotate(${Math.sin(t * 1.6 + w.t * 5) * 4}deg)` : `translateY(${on ? (1 - k) * -10 : 0}px)`,
         filter: blur ? `blur(${blur}px)` : undefined,
       }}
     >

@@ -1,5 +1,5 @@
-{magic}Juu'en 15.05|helt 15.85|*magisk, 16.0|/|*hokus 16.35|*pokus 16.85
-{focus}Jeg 17.25|var 17.55|lige 17.95|ved 18.1|at 18.15|mist' 18.25|mit 18.45|*fokus 18.68
+{smoke}Juu'en 15.05|helt 15.85|*magisk, 16.0|/|*hokus 16.35|*pokus 16.85
+{drunk}Jeg 17.25|var 17.55|lige 17.95|ved 18.1|at 18.15|mist' 18.25|mit 18.45|*fokus 18.68
 {gold}Brugt 19.15|så 19.25|meget 19.45|tid 19.72|/|på 20.0|at 20.1|jagt' 20.2|en 20.42|*bonus 20.58
 {rewind}Og 21.25|jeg 21.45|vil' 21.7|gøre 22.0|det 22.1|*igen, 22.3|/|for 22.75|jeg 22.95|vil 23.05|ik 23.2|*tænk' 23.35
 {spin}bar' 23.62|drej 23.8|på 24.0|en 24.15|*globus 24.35
