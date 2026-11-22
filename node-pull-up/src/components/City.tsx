@@ -79,6 +79,50 @@ export const Defs: React.FC = () => (
       <stop offset="0.45" stopColor="#ffc861" />
       <stop offset="1" stopColor="#b8741d" />
     </linearGradient>
+    <linearGradient id="cobble" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stopColor="#151522" />
+      <stop offset="0.35" stopColor="#2a2430" />
+      <stop offset="1" stopColor="#0a0a12" />
+    </linearGradient>
+    <linearGradient id="gPaint" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stopColor="#3d465f" />
+      <stop offset="0.06" stopColor="#11141f" />
+      <stop offset="0.32" stopColor="#05060b" />
+      <stop offset="0.5" stopColor="#1c2236" />
+      <stop offset="0.53" stopColor="#7a86a8" />
+      <stop offset="0.56" stopColor="#141827" />
+      <stop offset="0.85" stopColor="#06070c" />
+      <stop offset="1" stopColor="#1a1e2e" />
+    </linearGradient>
+    <linearGradient id="facadeShade" x1="0" y1="1" x2="0" y2="0">
+      <stop offset="0" stopColor="#000" stopOpacity="0.05" />
+      <stop offset="0.35" stopColor="#000" stopOpacity="0.35" />
+      <stop offset="1" stopColor="#02030a" stopOpacity="0.88" />
+    </linearGradient>
+    <linearGradient id="pufferGrad" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stopColor="#2a3146" />
+      <stop offset="0.18" stopColor="#0b0d15" />
+      <stop offset="0.5" stopColor="#141826" />
+      <stop offset="0.82" stopColor="#0a0c14" />
+      <stop offset="1" stopColor="#323b56" />
+    </linearGradient>
+    <linearGradient id="denim" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stopColor="#0b0e18" />
+      <stop offset="0.5" stopColor="#222a40" />
+      <stop offset="1" stopColor="#0b0e18" />
+    </linearGradient>
+    <radialGradient id="rimGrad">
+      <stop offset="0" stopColor="#3a4057" />
+      <stop offset="0.7" stopColor="#151821" />
+      <stop offset="1" stopColor="#6d7796" />
+    </radialGradient>
+    <linearGradient id="skin" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stopColor="#3a2418" />
+      <stop offset="1" stopColor="#7a4e34" />
+    </linearGradient>
+    <filter id="blur3" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="3" />
+    </filter>
     <filter id="blur6" x="-50%" y="-50%" width="200%" height="200%">
       <feGaussianBlur stdDeviation="6" />
     </filter>
