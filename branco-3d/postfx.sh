@@ -12,4 +12,4 @@ eq=gamma=1.1:contrast=1.03:saturation=1.07:brightness='0.012*sin(n*1.9)+0.008*si
 colorbalance=rs=0.02:bs=0.05:rh=0.05:gh=0.01:bh=-0.04,
 format=yuv420p,
 noise=c0s=18:c0f=t+u:c1s=4:c1f=t:c2s=4:c2f=t,
-vignette=angle=PI/6[v]" -map "[v]" -map 0:a? -c:v libx264 -crf 21 -maxrate 14M -bufsize 28M -preset slow -pix_fmt yuv420p -c:a copy "$2"
+vignette=angle=PI/6[v]" -map "[v]" -map 0:a? -c:v libx264 -crf 21 -maxrate 14M -bufsize 28M -preset veryfast -pix_fmt yuv420p -c:a copy "$2"
