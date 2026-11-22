@@ -1,0 +1,25 @@
+{four}Hopper 22.90|ud 23.15|af 23.25|*fire 23.50|gang' 23.80|fire'n 24.05|/|*fire 24.35|*brødre 24.60
+{nine}Fire 25.00|fucking 25.20|*9'ere 25.45|med 25.70|mig 25.85
+{count}Ka' 26.20|ta' 26.30|*15 26.55|lange 26.85|år, 27.30|/|*15 27.60|hurtig' 27.75|*skud 28.15
+{neon}Og 28.50|vide 28.65|*hvem, 29.00|der 29.20|bli'r 29.30|med 29.45|dig 29.60
+{calm}Bror, 29.70|jeg 29.90|spiller 30.00|*stille 30.25|og 30.55|*roligt 30.70
+{neon}Passer 31.00|bar' 31.15|*familien, 31.35|/|de 31.60|håber 31.80|på, 32.00|at 32.10|vi 32.25|ikk' 32.35|*glemmer 32.60
+{eyes}Jeg 33.10|ka' 33.20|se 33.30|*frygten 33.55|i 33.70|deres 33.80|*øjne, 34.00|/|før 34.25|de 34.45|ser 34.70|den 34.80|selv 34.95
+{fuck}Så 35.20|*fuck 35.45|hva' 35.70|de 35.75|si'r 35.85|til 36.00|mig 36.10
+{four}Hopper 36.62|ud 36.87|af 36.97|*fire 37.22|gang' 37.52|fire'n 37.77|/|*fire 38.07|*brødre 38.32
+{nine}Fire 38.72|fucking 38.92|*9'ere 39.17|med 39.42|mig 39.57
+{count}Ka' 39.92|ta' 40.02|*15 40.27|lange 40.57|år, 41.02|/|*15 41.32|hurtig' 41.47|*skud 41.87
+{neon}Og 42.22|vide 42.37|*hvem, 42.72|der 42.92|bli'r 43.02|med 43.17|dig 43.32
+{calm}Bror, 43.42|jeg 43.62|spiller 43.72|*stille 43.97|og 44.27|*roligt 44.42
+{neon}Passer 44.72|bar' 44.87|*familien, 45.07|/|de 45.32|håber 45.52|på, 45.72|at 45.82|vi 45.97|ikk' 46.07|*glemmer 46.32
+{eyes}Jeg 46.82|ka' 46.92|se 47.02|*frygten 47.27|i 47.42|deres 47.52|*øjne, 47.72|/|før 47.97|de 48.17|ser 48.42|den 48.52|selv 48.67
+{fuck}Så 48.92|*fuck 49.17|hva' 49.42|de 49.47|si'r 49.57|til 49.72|mig 49.82
+{corner}Kom 50.20|op 50.35|ned' 50.50|fra 50.62|*hjørnet, 50.75|/|hvor 50.90|der' 51.05|ikk' 51.15|er 51.30|*børn 51.70
+{phone}Men 52.25|*mama 52.40|prøved' 52.60|bare 52.80|at 52.95|find' 53.10|sin 53.30|*søn 53.45
+{daynight}Vi 54.20|var 54.35|ude 54.50|hver 54.65|*dag, 54.75|/|ude 54.95|hver 55.10|*nat 55.45
+{glitch}Ku' 55.60|ikk' 55.75|engang 55.90|*finde 56.30|mig 56.50|*selv 56.70
+{neon}Har 56.90|været 57.00|ude 57.15|hele 57.35|*livet, 57.60|/|jagted' 58.30|de 58.55|der 58.70|*skejs, 59.00|/|ku' 59.30|ikk' 59.45|finde 59.55|*vejen 59.90|derhjemme 60.20
+{count}*14 60.80|år, 61.10|lagde 61.20|en 61.40|*husleje 61.75|/|til 62.05|min 62.15|mama 62.30|sku' 62.60|aldrig 62.85|mangle 63.35|*penge 63.60
+{heart}Håber 64.00|du 64.20|ka' 64.30|se, 64.40|hva' 64.60|jeg 64.70|si'r, 64.80|/|lægger 65.20|bar' 65.40|mit 65.55|*hjerte 65.80|i 65.90|det 66.00|her 66.10
+{neon}Der' 67.30|ikk' 67.45|noget 67.55|*liv 67.80|ude 67.90|på 68.05|*gaden, 68.20|/|den 68.60|*blok 68.80|har 69.00|ikk' 69.10|*kærlighed 69.40|mer' 69.70
+{burn}Mine 70.50|*brødre 70.70|de 70.95|blaffer 71.30|hinanden, 71.60|/|så 71.95|hva' 72.10|er 72.20|de 72.30|*penge 72.55|blevet 72.80|*værd? 73.00
