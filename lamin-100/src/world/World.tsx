@@ -420,51 +420,106 @@ const Groups: React.FC<{ t: number }> = ({ t }) => {
 };
 
 /* ---------- café-bord med telefon ---------- */
-const PHONE = { x: 5330, y: 2575 };
+const TT = { x: 5330, y: GROUND - 34 }; // bordpladens midte
 const CafeTable: React.FC<{ t: number }> = ({ t }) => {
   const det = f0(6, "det") ?? 17.5;
   const ik = f0(6, "ik") ?? 17.85;
   const nu = f0(6, "nu") ?? 18.25;
-  const ringing = t > det - 1 && t < ik;
+  const ringing = t > det - 1.2 && t < ik;
   const decl = ap(t, ik, 0.2);
-  const off = ap(t, nu, 0.3);
-  const vib = ringing ? Math.sin(t * 80) * 2 : 0;
+  const off = ap(t, nu, 0.35);
+  // vibration: telefonen kravler en smule hen over bordet
+  const vibA = ringing ? Math.sin(t * 90) * 1.6 : 0;
+  const crawl = clamp((Math.min(t, ik) - (det - 1.2)) / 1.5) * 6;
+  const lit = 1 - off;
+  const SQ = 0.4; // perspektiv: bordpladen set skråt oppefra
+  const plane = (x: number, y: number, rot: number) => `translate(${x},${y}) scale(1,${SQ}) rotate(${rot})`;
+  const px = TT.x - 22 + crawl, py = TT.y + 6;
   return (
     <g>
-      {/* stole og bord */}
-      {[5180, 5480].map((x, i) => (
-        <g key={x} stroke="#1a1410" strokeWidth={6} fill="none">
-          <path d={`M${x},${GROUND + 110} L${x},${GROUND - 10} M${x + (i ? 60 : -60)},${GROUND + 110} L${x + (i ? 60 : -60)},${GROUND - 10} M${x - 40},${GROUND - 10} L${x + 40},${GROUND - 10} M${x + (i ? -30 : 30)},${GROUND - 10} L${x + (i ? -30 : 30)},${GROUND - 140}`} />
-          <rect x={x - 46} y={GROUND - 16} width={92} height={10} fill="#3a2414" stroke="none" />
+      {/* stole */}
+      {[5150, 5510].map((x, i) => (
+        <g key={x} stroke="#15100c" strokeWidth={6} fill="none">
+          <path d={`M${x},${GROUND + 110} L${x},${GROUND - 10} M${x + (i ? 60 : -60)},${GROUND + 110} L${x + (i ? 60 : -60)},${GROUND - 10} M${x + (i ? -30 : 30)},${GROUND - 10} L${x + (i ? -30 : 30)},${GROUND - 150}`} />
+          <ellipse cx={x + (i ? 15 : -15)} cy={GROUND - 12} rx={50} ry={14} fill="#3a2414" stroke="none" />
+          {Array.from({ length: 4 }).map((_, k) => (
+            <line key={k} x1={x + (i ? -30 : 30)} y1={GROUND - 140 + k * 30} x2={x + (i ? -30 : 30) + (i ? -1 : 1) * 4} y2={GROUND - 130 + k * 30} stroke="#2a1a10" strokeWidth={3} />
+          ))}
         </g>
       ))}
-      <rect x={5326} y={GROUND - 20} width={8} height={130} fill="#1a1410" />
-      <ellipse cx={5330} cy={GROUND + 108} rx={50} ry={10} fill="#1a1410" />
-      <ellipse cx={5330} cy={GROUND - 22} rx={120} ry={20} fill="#c8bca6" />
-      <ellipse cx={5330} cy={GROUND - 26} rx={120} ry={18} fill="#e8dcc6" />
-      {/* kop */}
-      <path d={`M5400,${GROUND - 62} L5440,${GROUND - 62} L5436,${GROUND - 30} L5404,${GROUND - 30}Z`} fill="#f4f1ea" />
-      <path d={`M5440,${GROUND - 56} q14,4 0,18`} stroke="#f4f1ea" strokeWidth={4} fill="none" />
-      <path d={`M5414,${GROUND - 70} q-6,-14 4,-26 M5428,${GROUND - 72} q6,-16 -2,-30`} stroke="#ddd" strokeWidth={2} fill="none" opacity={0.5} />
-      {/* telefon lænet mod koppen */}
-      <g transform={`translate(${PHONE.x + vib},${PHONE.y}) rotate(-8)`}>
-        <rect x={-26} y={-54} width={52} height={104} rx={8} fill="#0a0a0d" />
-        <rect x={-23} y={-50} width={46} height={96} rx={6} fill={off > 0.5 ? "#05060a" : "#1b2a40"} />
-        {off < 0.5 && (
-          <g>
-            <circle cx={0} cy={-22} r={10} fill="#5a4a7a" />
-            <text x={0} y={-2} textAnchor="middle" fontFamily="Anton" fontSize={9} fill="#fff">UKENDT</text>
-            <text x={0} y={8} textAnchor="middle" fontFamily="SpaceMonoB" fontSize={5} fill="#aab">ringer...</text>
-            <circle cx={-12} cy={30} r={7 + decl * 2} fill="#ff3b30" />
-            <circle cx={12} cy={30} r={7} fill="#34c759" opacity={1 - decl} />
-            {decl > 0.5 && <text x={0} y={20} textAnchor="middle" fontFamily="SpaceMonoB" fontSize={6} fill="#ff6b62">AFVIST</text>}
-          </g>
-        )}
-        {ringing && [0, 1, 2].map((i) => {
-          const a = ((t * 1.6 + i / 3) % 1);
-          return <rect key={i} x={-26 - a * 30} y={-54 - a * 30} width={52 + a * 60} height={104 + a * 60} rx={10} fill="none" stroke="#7ae8ff" strokeWidth={2} opacity={1 - a} />;
-        })}
-        <circle cx={0} cy={0} r={90} fill="url(#rBlue)" opacity={(1 - off) * 0.5} />
+      {/* fod + søjle */}
+      <ellipse cx={TT.x} cy={GROUND + 110} rx={64} ry={14} fill="#0f0c0a" />
+      <path d={`M${TT.x - 7},${GROUND + 108} L${TT.x - 5},${TT.y + 14} L${TT.x + 5},${TT.y + 14} L${TT.x + 7},${GROUND + 108}Z`} fill="#1a1612" />
+      <rect x={TT.x - 2} y={TT.y + 14} width={3} height={GROUND + 94 - TT.y} fill="#5a5048" opacity={0.5} />
+      {/* bordplade (marmor) med kant og tykkelse */}
+      <ellipse cx={TT.x} cy={TT.y + 20} rx={168} ry={168 * SQ} fill="#000" opacity={0.45} filter="url(#fBlur6)" />
+      <ellipse cx={TT.x} cy={TT.y + 9} rx={160} ry={160 * SQ} fill="#8a7e6c" />
+      <ellipse cx={TT.x} cy={TT.y} rx={160} ry={160 * SQ} fill="url(#gMarble)" />
+      <g opacity={0.35} stroke="#9a8e7a" fill="none" strokeWidth={1.5}>
+        <path d={`M${TT.x - 130},${TT.y - 20} q60,10 90,-6 q40,-18 90,4`} />
+        <path d={`M${TT.x - 60},${TT.y + 40} q40,-14 70,-4 q30,10 80,-20`} />
+      </g>
+      <ellipse cx={TT.x} cy={TT.y} rx={158} ry={158 * SQ} fill="none" stroke="#fff" strokeOpacity={0.35} strokeWidth={2} />
+      {/* lys fra skærmen på bordpladen */}
+      <ellipse cx={px} cy={py} rx={130} ry={130 * SQ} fill="url(#rBlue)" opacity={lit * 0.55} style={{ mixBlendMode: "screen" }} />
+      {/* kop på underkop (bagved) */}
+      <g>
+        <ellipse cx={TT.x + 78} cy={TT.y - 20} rx={40} ry={40 * SQ} fill="#000" opacity={0.3} filter="url(#fBlur2)" />
+        <ellipse cx={TT.x + 76} cy={TT.y - 24} rx={38} ry={38 * SQ} fill="#e9e4da" />
+        <ellipse cx={TT.x + 76} cy={TT.y - 25} rx={26} ry={26 * SQ} fill="#d6d0c4" />
+        <path d={`M${TT.x + 58},${TT.y - 62} L${TT.x + 94},${TT.y - 62} L${TT.x + 90},${TT.y - 28} Q${TT.x + 76},${TT.y - 22} ${TT.x + 62},${TT.y - 28}Z`} fill="#f4f1ea" />
+        <path d={`M${TT.x + 58},${TT.y - 62} L${TT.x + 66},${TT.y - 62} L${TT.x + 68},${TT.y - 28} L${TT.x + 62},${TT.y - 28}Z`} fill="#fff" opacity={0.6} />
+        <path d={`M${TT.x + 86},${TT.y - 62} L${TT.x + 94},${TT.y - 62} L${TT.x + 90},${TT.y - 28} L${TT.x + 84},${TT.y - 28}Z`} fill="#000" opacity={0.15} />
+        <ellipse cx={TT.x + 76} cy={TT.y - 62} rx={18} ry={18 * SQ} fill="#3a2010" />
+        <ellipse cx={TT.x + 76} cy={TT.y - 62} rx={18} ry={18 * SQ} fill="none" stroke="#f4f1ea" strokeWidth={2} />
+        <path d={`M${TT.x + 93},${TT.y - 54} q14,4 2,18`} stroke="#f4f1ea" strokeWidth={4} fill="none" />
+        <path d={`M${TT.x + 70},${TT.y - 70} q-6,-14 4,-26 q8,-12 0,-24 M${TT.x + 82},${TT.y - 72} q6,-16 -2,-30`} stroke="#ddd" strokeWidth={2} fill="none" opacity={0.35} />
+        <ellipse cx={TT.x + 66} cy={TT.y - 45} rx={6} ry={14} fill="url(#rBlue)" opacity={lit * 0.6} />
+      </g>
+      {/* nøgler */}
+      <g transform={plane(TT.x - 100, TT.y + 22, 30)}>
+        <circle r={9} fill="none" stroke="#b8bcc6" strokeWidth={2.4} />
+        <rect x={6} y={-3} width={26} height={7} rx={2} fill="#c9a45a" />
+        <rect x={-30} y={4} width={22} height={6} rx={2} fill="#9aa0aa" />
+      </g>
+      {/* TELEFONEN liggende fladt på bordet */}
+      <g>
+        {/* kontaktskygge */}
+        <g transform={plane(px + 2, py + 4, -24 + vibA)}>
+          <rect x={-38} y={-74} width={76} height={148} rx={14} fill="#000" opacity={0.6} filter="url(#fBlur6)" />
+        </g>
+        {/* telefonens tykkelse (kant) */}
+        <g transform={`translate(0,3.5) ${plane(px, py, -24 + vibA)}`}>
+          <rect x={-33} y={-68} width={66} height={136} rx={12} fill="#2a2c34" />
+        </g>
+        <g transform={plane(px, py, -24 + vibA)}>
+          <rect x={-33} y={-68} width={66} height={136} rx={12} fill="#0b0b0e" />
+          <rect x={-33} y={-68} width={66} height={136} rx={12} fill="none" stroke="#5a5e6a" strokeWidth={1.4} />
+          <rect x={-30} y={-65} width={60} height={130} rx={10} fill={lit > 0.5 ? "#13203a" : "#040509"} />
+          {lit > 0.02 && (
+            <g opacity={lit}>
+              <rect x={-30} y={-65} width={60} height={130} rx={10} fill="url(#gPhoneScr)" />
+              <text x={0} y={-48} textAnchor="middle" fontFamily="SpaceMonoB" fontSize={7} fill="#cfd8f0">21:47</text>
+              <circle cx={0} cy={-26} r={13} fill="#6a5a8a" />
+              <text x={0} y={-22} textAnchor="middle" fontFamily="Anton" fontSize={12} fill="#fff">?</text>
+              <text x={0} y={-2} textAnchor="middle" fontFamily="Anton" fontSize={13} fill="#fff">UKENDT</text>
+              <text x={0} y={8} textAnchor="middle" fontFamily="SpaceMonoB" fontSize={5.5} fill="#9aa6c8">{decl > 0.5 ? "opkald afvist" : "ringer..."}</text>
+              <circle cx={-15} cy={42} r={9 + decl * 3} fill="#ff3b30" />
+              <rect x={-19} y={40.5} width={8} height={3} rx={1.5} fill="#fff" transform={`rotate(135 -15 42)`} />
+              <circle cx={15} cy={42} r={9} fill="#34c759" opacity={1 - decl} />
+              <rect x={-12} y={58} width={24} height={2} rx={1} fill="#fff" opacity={0.6} />
+            </g>
+          )}
+          {/* glasrefleks fra gadelyset */}
+          <path d="M-30,-20 L-6,-65 L6,-65 L-30,4Z" fill="#fff" opacity={0.08} />
+          <rect x={-8} y={-62} width={16} height={4} rx={2} fill="#000" />
+          {/* vibrations-ringe på bordpladen */}
+          {ringing &&
+            [0, 1, 2].map((i) => {
+              const a = (t * 1.8 + i / 3) % 1;
+              return <rect key={i} x={-33 - a * 34} y={-68 - a * 34} width={66 + a * 68} height={136 + a * 68} rx={14 + a * 20} fill="none" stroke="#7ae8ff" strokeWidth={2.5} opacity={(1 - a) * 0.8} />;
+            })}
+        </g>
       </g>
     </g>
   );

@@ -184,6 +184,16 @@ export const WorldDefs: React.FC = () => (
       <stop offset="0.6" stopColor="#6a6a9a" stopOpacity="0.12" />
       <stop offset="1" stopColor="#6a6a9a" stopOpacity="0" />
     </linearGradient>
+    <radialGradient id="gMarble" cx="0.4" cy="0.35" r="0.75">
+      <stop offset="0" stopColor="#f4efe4" />
+      <stop offset="0.6" stopColor="#ddd4c2" />
+      <stop offset="1" stopColor="#b8ac96" />
+    </radialGradient>
+    <linearGradient id="gPhoneScr" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stopColor="#2a3a6a" />
+      <stop offset="0.55" stopColor="#1a2240" />
+      <stop offset="1" stopColor="#3a1a3a" />
+    </linearGradient>
     <filter id="fBlur2"><feGaussianBlur stdDeviation="2" /></filter>
     <filter id="fBlur6"><feGaussianBlur stdDeviation="6" /></filter>
     <filter id="fBlur14"><feGaussianBlur stdDeviation="14" /></filter>
