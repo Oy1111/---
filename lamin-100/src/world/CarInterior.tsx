@@ -142,7 +142,7 @@ export const CarInterior: React.FC<{ t: number; p: number; full: number }> = ({ 
       {/* widescreen-glaspanel */}
       <rect x={20} y={920} width={1040} height={330} rx={26} fill="#020306" stroke="#3a3c48" strokeWidth={4} />
       <rect x={30} y={930} width={1020} height={310} rx={20} fill="url(#ciGlass)" />
-      <DigiDial cx={160} cy={1090} r={120} v={(p * 100) / 260} max={260} step={20} unit="km/t" color={full > 0.5 ? "#ffb347" : "#3de0ff"} full={full} />
+      <DigiDial cx={160} cy={1090} r={120} v={(p * 100) / 260} max={260} step={40} unit="km/t" color={full > 0.5 ? "#ffb347" : "#3de0ff"} full={full} />
       <DigiDial cx={420} cy={1090} r={120} v={rpm} max={8} step={1} unit="x1000 rpm" color={full > 0.5 ? "#ff4a3a" : "#7a5cff"} full={full} />
       <text x={290} y={968} textAnchor="middle" fontFamily="SpaceMonoB" fontSize={18} fill="#7a86a8">D  ·  21:47  ·  8°C</text>
       <rect x={250} y={1188} width={80} height={36} rx={8} fill="#0a0e1c" stroke="#2a3250" />
